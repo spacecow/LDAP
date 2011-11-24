@@ -8,7 +8,7 @@ describe "Users" do
     end
     it "should display a list of users" do
       visit users_path
-      page.should have_content("johan")
+      table.should eq [["/home/test", "12"]]
     end
   end
 end
