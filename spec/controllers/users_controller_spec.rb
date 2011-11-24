@@ -9,7 +9,7 @@ describe UsersController do
     end
 
     it "renders an error if login fails" do
-      controller.stub!(:authpam).and_return(false)
+      controller.stub!(:login).and_return(false)
       get :index 
       response.body.should =~ /error/
     end
