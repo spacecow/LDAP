@@ -1,0 +1,8 @@
+<%= pluralize(@users.count, "user") %>
+<table>
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.path %></td>
+  </tr>
+<% end %>
+</table>

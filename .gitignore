@@ -6,3 +6,5 @@ config/database.yml
 config/login.yml
 *.swp
 data/userlist.txt
+data/userlist_test.txt
+

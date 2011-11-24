@@ -1,25 +1,28 @@
 class UsersController < ApplicationController
   def index
-    data = login_data
-    if login(data["userid"],data["passwd"])
-    else render :text => "error"
-    end
+    @users = userlist
   end
 
   private
 
-    def login(userid,passwd)
-      if %w(development test).include?(Rails.env)
-        return true
+    def userlist
+      path = "data/userlist.txt"
+      if Rails.env == "development"
+      elsif Rails.env == "test"
+        path = "data/userlist_test.txt"
       elsif Rails.env == "production"
         %x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -h altair "(objectclass=*)"
-gecos homeDirectory > userlist.txt]
-        return true
+gecos homeDirectory > data/userlist.txt]
       else
         return false 
       end
-    end
-    def login_data
-      YAML::load(File.open("#{Rails.root.to_s}/config/login.yml"))
+
+      arr = Array.new
+      File.open(path).each do |line|
+        if data = line.match(/homeDirectory: (.*)/)
+          arr.push User.new(:path => data[1].chop)
+        end
+      end
+      return arr
     end
 end
