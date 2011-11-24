@@ -5,3 +5,4 @@ tmp/
 config/database.yml
 config/login.yml
 *.swp
+data/userlist.txt

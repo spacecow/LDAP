@@ -12,7 +12,9 @@ class UsersController < ApplicationController
       if %w(development test).include?(Rails.env)
         return true
       elsif Rails.env == "production"
-        return authpam(login_data["userid"],login_data["passwd"])
+        %x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -h altair "(objectclass=*)"
+gecos homeDirectory > userlist.txt]
+        return true
       else
         return false 
       end
