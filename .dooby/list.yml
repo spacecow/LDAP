@@ -5,3 +5,7 @@
   todo: delayed job :done
 a1eee1: !ruby/object:Dooby::Task 
   todo: cannot calculate the size of an account that does not exist :done
+dd8947: !ruby/object:Dooby::Task 
+  todo: make delayed jobs work automatically in production mode
+2d7d69: !ruby/object:Dooby::Task 
+  todo: crop seems to work differently in development mode and production mode

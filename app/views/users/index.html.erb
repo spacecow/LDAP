@@ -1,10 +1,17 @@
 <%= pluralize(@users.count, "user") %>
 <table>
+  <tr>
+    <th><%= sortable 'path' %></th>
+    <th><%= sortable 'account_size' %></th>
+  </tr>
 <% @users.each do |user| %>
   <tr>
     <td><%= user.path %></td>
-    <% user.delay.calculate_account_size if user.size.nil? %>
-    <td><%= user.size %></td>
+    <% if user.account_size.nil? %>
+      <% user.update_attribute(:account_size,'-') %>
+      <% user.delay.calculate_account_size %>
+    <% end %>
+    <td><%= user.account_size %></td>
   </tr>
 <% end %>
 </table>

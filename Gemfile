@@ -4,6 +4,7 @@ gem 'rails', '3.0.10'
 gem 'mysql2', '0.2.6'
 gem 'delayed_job'
 gem 'annotate'
+gem 'compass'
 
 group :development do
   gem "rspec-rails"

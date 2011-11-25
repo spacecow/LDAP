@@ -5,6 +5,7 @@ tmp/
 config/database.yml
 config/login.yml
 *.swp
+*.swo
 data/userlist.txt
 data/userlist_test.txt
 
