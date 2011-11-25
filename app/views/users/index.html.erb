@@ -3,7 +3,7 @@
 <% @users.each do |user| %>
   <tr>
     <td><%= user.path %></td>
-    <% user.send_later(:calculate_account_size) %>
+    <% user.delay.calculate_account_size if user.size.nil? %>
     <td><%= user.size %></td>
   </tr>
 <% end %>

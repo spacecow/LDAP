@@ -6,6 +6,12 @@ describe User do
     user.calculate_account_size
     User.last.size.should eq "12"
   end
+
+  it "cannot calculate the size of an account that does not exist" do
+    user = User.create(:path => "/home/ghost")
+    user.calculate_account_size
+    User.last.size.should eq "-"
+  end
 end
 
 # == Schema Information

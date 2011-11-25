@@ -3,3 +3,5 @@
   todo: calculate account size :done
 433fba: !ruby/object:Dooby::Task 
   todo: delayed job :done
+a1eee1: !ruby/object:Dooby::Task 
+  todo: cannot calculate the size of an account that does not exist :done
