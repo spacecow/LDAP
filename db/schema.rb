@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111125020710) do
+ActiveRecord::Schema.define(:version => 20111125062811) do
+
+  create_table "days", :force => true do |t|
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -33,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20111125020710) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "account_size"
+    t.integer  "day_id"
   end
 
 end

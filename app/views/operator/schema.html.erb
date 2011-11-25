@@ -1,0 +1,9 @@
+<table>
+  <% @days.each do |day| %>
+    <tr>
+      <td><%= day.dateformat %></td>
+      <td><%= pluralize(day.users.count, "user") %></td>
+      <td><%= day.users_account_size_sum %></td>
+    </tr>
+  <% end %>
+</table>
