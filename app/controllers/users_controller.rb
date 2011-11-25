@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    userlist
     @users = User.order(sort_column+" "+sort_direction)
   end
 

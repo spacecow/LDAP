@@ -16,6 +16,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: users
@@ -24,7 +25,7 @@ end
 #  path         :string(255)
 #  created_at   :datetime
 #  updated_at   :datetime
-#  account_size :integer(4)
 #  day_id       :integer(4)
+#  account_size :integer(4)      default(0)
 #
 

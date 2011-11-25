@@ -9,3 +9,5 @@ dd8947: !ruby/object:Dooby::Task
   todo: make delayed jobs work automatically in production mode
 2d7d69: !ruby/object:Dooby::Task 
   todo: crop seems to work differently in development mode and production mode
+fe3040: !ruby/object:Dooby::Task 
+  todo: generate userlist :done

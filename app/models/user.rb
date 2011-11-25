@@ -1,19 +1,17 @@
 require 'stringio'
  
 class User < ActiveRecord::Base
+  before_create :calculate_account_size
+
   def calculate_account_size
+    return if account_size != 0
     self.account_size = %x[du -s #{path}].split[0]
     if %w(development test).include?(Rails.env)
       self.account_size = "-" if !$?.success?
     end
-    self.save
-  end
-
-  class << self
-    def generate_userlist
-    end
   end
 end
+
 
 
 
@@ -25,7 +23,7 @@ end
 #  path         :string(255)
 #  created_at   :datetime
 #  updated_at   :datetime
-#  account_size :integer(4)
 #  day_id       :integer(4)
+#  account_size :integer(4)      default(0)
 #
 

@@ -1,8 +1,16 @@
 require 'spec_helper'
 
 describe Day do
-  it "" do
-    Day.generate_userlist
+  context "#generate_userlist" do
+    it "generates a day with said date" do
+      day = Day.generate_userlist("2011-11-25")
+      day.date.should eq Date.today
+    end
+
+    it "calculates the total user account size" do
+      day = Day.generate_todays_userlist
+      day.users_account_size_sum.should eq "16B"
+    end
   end
 end
 
