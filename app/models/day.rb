@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 class Day < ActiveRecord::Base
-  has_many :users, :after_add => :sum_account_size, :after_remove => :sum_account_size
+  has_many :users, :after_add => [:inc_users_count, :inc_account_size], :after_remove => [:dec_users_count, :dec_account_size]
 
   def dateformat; date.strftime("%Y年%m月%d日") end
-
-  def users_account_size_sum
-    users.map(&:account_size).inject(:+)
-  end
 
   class << self
     def generate_userlist(s)
@@ -16,9 +12,9 @@ class Day < ActiveRecord::Base
       File.open(path).each do |line|
         if data = line.match(/homeDirectory: (.*)/)
           if %w(development test).include?(Rails.env)
-            User.delay.create(:path => data[1].chop, :day_id => day.id)
+            day.delay.add_user(User.create(:path => data[1].chop))
           elsif Rails.env.production?
-            User.delay.create(:path => data[1], :day_id => day.id)
+            day.delay.add_user(User.create(:path => data[1]))
           end
         end
       end
@@ -27,15 +23,35 @@ class Day < ActiveRecord::Base
 
     def generate_todays_userlist; generate_userlist(Date.today) end
   end
+
+  def add_user(user); self.users << user end
+
+  private
+
+    def dec_account_size(user)
+      update_attribute(:users_account_size_sum, users_account_size_sum - user.account_size)
+    end
+    def dec_users_count(user)
+      update_attribute(:users_count, users_count-1)
+    end
+    def inc_account_size(user)
+      update_attribute(:users_account_size_sum, users_account_size_sum + user.account_size) 
+    end
+    def inc_users_count(user)
+      update_attribute(:users_count, users_count+1)
+    end
 end
+
 
 # == Schema Information
 #
 # Table name: days
 #
-#  id         :integer(4)      not null, primary key
-#  date       :date
-#  created_at :datetime
-#  updated_at :datetime
+#  id                     :integer(4)      not null, primary key
+#  date                   :date
+#  created_at             :datetime
+#  updated_at             :datetime
+#  users_count            :integer(4)      default(0)
+#  users_account_size_sum :integer(4)      default(0)
 #
 

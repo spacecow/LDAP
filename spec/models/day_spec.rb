@@ -9,18 +9,21 @@ describe Day do
 
     it "calculates the total user account size" do
       day = Day.generate_todays_userlist
-      day.users_account_size_sum.should eq "16"
+      day.users_account_size_sum.should eq 16
     end
   end
 end
+
 
 # == Schema Information
 #
 # Table name: days
 #
-#  id         :integer(4)      not null, primary key
-#  date       :date
-#  created_at :datetime
-#  updated_at :datetime
+#  id                     :integer(4)      not null, primary key
+#  date                   :date
+#  created_at             :datetime
+#  updated_at             :datetime
+#  users_count            :integer(4)      default(0)
+#  users_account_size_sum :integer(4)      default(0)
 #
 

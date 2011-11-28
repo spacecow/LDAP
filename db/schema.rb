@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111128033657) do
+ActiveRecord::Schema.define(:version => 20111128041535) do
 
   create_table "days", :force => true do |t|
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "users_count", :default => 0
+    t.integer  "users_count",            :default => 0
+    t.integer  "users_account_size_sum", :default => 0
   end
 
   create_table "delayed_jobs", :force => true do |t|

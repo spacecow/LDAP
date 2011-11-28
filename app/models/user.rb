@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  belongs_to :day, :counter_cache => true
+  belongs_to :day
 
   before_create :calculate_account_size
 
