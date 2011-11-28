@@ -1,5 +1,5 @@
 set :output, "cron.log"
 
-every :monday, :at => '16:33pm' do
+every :monday, :at => '16:48pm' do
   rake "test"
 end
