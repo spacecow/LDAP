@@ -13,7 +13,7 @@ describe "schema" do
     day = Factory(:day, :date => "2011-11-25")
     Factory(:user, :path => "/home/test", :account_size => 12, :day_id => day.id)
     visit schema_path
-    table(0).should eq ["2011年11月25日", "1 user", "12B"]
+    table(0).should eq ["2011年11月25日", "1", "12"]
   end
 
   context "sort for" do
@@ -38,14 +38,14 @@ describe "schema" do
 
     it "Users ascending" do
       click_link "Users"
-      table(0,1).should have_content("46")
-      table(1,1).should have_content("123")
+      table(0,1).should have_content("1")
+      table(1,1).should have_content("2")
     end
     it "Users descending" do
       click_link "Users"
       click_link "Users"
-      table(0,1).should have_content("123")
-      table(1,1).should have_content("46")
+      table(0,1).should have_content("2")
+      table(1,1).should have_content("1")
     end
   end
 end

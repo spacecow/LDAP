@@ -9,7 +9,7 @@ describe Day do
 
     it "calculates the total user account size" do
       day = Day.generate_todays_userlist
-      day.users_account_size_sum.should eq "16B"
+      day.users_account_size_sum.should eq "16"
     end
   end
 end

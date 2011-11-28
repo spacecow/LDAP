@@ -13,3 +13,5 @@ fe3040: !ruby/object:Dooby::Task
   todo: generate userlist :done
 71901c: !ruby/object:Dooby::Task 
   todo: day show :done
+5d267f: !ruby/object:Dooby::Task 
+  todo: user count cache column :done

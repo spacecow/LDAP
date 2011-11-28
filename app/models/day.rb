@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 class Day < ActiveRecord::Base
-  has_many :users
+  has_many :users, :after_add => :sum_account_size, :after_remove => :sum_account_size
 
   def dateformat; date.strftime("%Y年%m月%d日") end
 
   def users_account_size_sum
-    "#{users.map(&:account_size).inject(:+)}B"
+    users.map(&:account_size).inject(:+)
   end
 
   class << self

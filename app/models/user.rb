@@ -1,6 +1,6 @@
-require 'stringio'
- 
 class User < ActiveRecord::Base
+  belongs_to :day, :counter_cache => true
+
   before_create :calculate_account_size
 
   def calculate_account_size
