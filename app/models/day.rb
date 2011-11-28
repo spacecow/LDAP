@@ -28,7 +28,7 @@ p "fuck"
     def generate_todays_userlist; generate_userlist(Date.today) end
   end
 
-  def delay_add_user(user); p self; self.users << user end
+  def delay_add_user(user); self.users << user end
 
   private
 
