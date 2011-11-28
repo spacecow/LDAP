@@ -1,3 +1,5 @@
+require "whenever/capistrano"
+
 default_run_options[:pty] = true
 set :repository,  "git@github.com:spacecow/LDAP.git"
 set :scm, "git"

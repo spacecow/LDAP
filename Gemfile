@@ -5,7 +5,7 @@ gem 'mysql2', '0.2.6'
 gem 'delayed_job'
 gem 'annotate'
 gem 'compass'
-gem 'whenever'
+gem 'whenever', :require => false
 
 group :development do
 #  gem "rspec-rails"
