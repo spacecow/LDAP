@@ -26,13 +26,9 @@ class Day < ActiveRecord::Base
       day
     end
 
-    def generate_todays_userlist; generate_userlist(Date.today) end
-
-    def test
-      File.open('testfile.txt', 'w') do |f|
-        f.write("testing")
-      end
-    end
+    def generate_todays_userlist;
+      generate_userlist(Date.today)
+     end
   end
 
   def delay_add_user(user); self.users << user end
