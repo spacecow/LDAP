@@ -6,7 +6,7 @@
   </tr>
   <% @days.each do |day| %>
     <tr>
-      <td><%= day.dateformat %></td>
+      <td><%= link_to day.dateformat, day_path(day) %></td>
       <td><%= day.users_count %></td>
       <td><%= day.users_account_size_sum %></td>
     </tr>

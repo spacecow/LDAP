@@ -2,8 +2,9 @@
 <html>
 <head>
   <title>
+    <%= content_for?(:title) ? "#{yield(:title)} - " : "" %>
     <% if Rails.env == "development" %>
-      LDAP - development
+      LDAP (development)
     <% elsif %>
       LDAP
     <% end %>

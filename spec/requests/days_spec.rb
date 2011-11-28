@@ -4,9 +4,9 @@ describe "Days" do
   context "sort for" do
     before(:each) do
       day = Factory(:day)
-      User.create(:path => "/home/testar", :account_size => 3, :day_id => day.id)
-      User.create(:path => "/home/tester", :account_size => 43, :day_id => day.id)
-      User.create(:path => "/home/test", :account_size => 123, :day_id => day.id)
+      day.users << create_user("/home/testar",3)
+      day.users << create_user("/home/tester",43)
+      day.users << create_user("/home/test",123)
       visit day_path(day) 
     end
 

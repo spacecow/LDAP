@@ -1,4 +1,5 @@
-<%= pluralize(@users.count, "user") %>
+<%= title @day.dateformat %>
+<%= subtitle pluralize(@users.count, "user") %>
 <table>
   <tr>
     <th><%= sortable 'path' %></th>

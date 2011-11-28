@@ -6,7 +6,6 @@ class Day < ActiveRecord::Base
 
   class << self
     def generate_userlist(s)
-p "fuck"
       day = Day.create(:date => s)
       path = "data/userlist_test.txt"
       if Rails.env.production?
@@ -16,9 +15,11 @@ p "fuck"
       File.open(path).each do |line|
         if data = line.match(/homeDirectory: (.*)/)
           if %w(development test).include?(Rails.env)
-            day.delay.delay_add_user(User.create(:path => data[1].chop))
+            day.users << User.create(:path => data[1].chop)
+            #day.delay.delay_add_user(User.create(:path => data[1].chop))
           elsif Rails.env.production?
-            day.delay.delay_add_user(User.create(:path => data[1]))
+            day.users << User.create(:path => data[1])
+            #day.delay.delay_add_user(User.create(:path => data[1]))
           end
         end
       end
