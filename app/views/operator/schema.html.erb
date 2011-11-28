@@ -1,4 +1,8 @@
 <table>
+  <tr>
+    <th><%= sortable 'date' %></th>
+    <th><%= sortable 'users' %></th>
+  </tr>
   <% @days.each do |day| %>
     <tr>
       <td><%= day.dateformat %></td>

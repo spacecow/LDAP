@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Day do
   context "#generate_userlist" do
     it "generates a day with said date" do
-      day = Day.generate_userlist("2011-11-25")
+      day = Day.generate_userlist(Date.today)
       day.date.should eq Date.today
     end
 

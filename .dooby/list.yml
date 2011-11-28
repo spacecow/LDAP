@@ -11,3 +11,5 @@ dd8947: !ruby/object:Dooby::Task
   todo: crop seems to work differently in development mode and production mode
 fe3040: !ruby/object:Dooby::Task 
   todo: generate userlist :done
+71901c: !ruby/object:Dooby::Task 
+  todo: day show :done

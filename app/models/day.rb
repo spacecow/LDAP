@@ -16,16 +16,16 @@ class Day < ActiveRecord::Base
       File.open(path).each do |line|
         if data = line.match(/homeDirectory: (.*)/)
           if %w(development test).include?(Rails.env)
-            day.users << User.create(:path => data[1].chop)
+            User.delay.create(:path => data[1].chop, :day_id => day.id)
           elsif Rails.env.production?
-            day.users << User.create(:path => data[1])
+            User.delay.create(:path => data[1], :day_id => day.id)
           end
         end
       end
       day
     end
 
-    def generate_todays_userlist; generate_userlist(Date.today.strftime("%Y-%m-%d")) end
+    def generate_todays_userlist; generate_userlist(Date.today) end
   end
 end
 
