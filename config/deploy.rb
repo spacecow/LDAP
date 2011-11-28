@@ -6,6 +6,7 @@ set :scm, "git"
 set :branch, "master"
 set :deploy_via, :remote_cache
 set :use_sudo, false
+set :whenever_command, "bundle exec whenever"
 
 set :application, "LDAP"
 set :deploy_to, "/home/www/apps/#{application}"
