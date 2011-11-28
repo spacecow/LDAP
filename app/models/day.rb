@@ -6,15 +6,19 @@ class Day < ActiveRecord::Base
 
   class << self
     def generate_userlist(s)
+p "fuck"
       day = Day.create(:date => s)
       path = "data/userlist_test.txt"
-      path = "data/userlist.txt" if Rails.env.production?
+      if Rails.env.production?
+        path = "data/userlist.txt"
+        %x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -h altair "(objectclass=*)" gecos homeDirectory > data/userlist.txt]
+      end
       File.open(path).each do |line|
         if data = line.match(/homeDirectory: (.*)/)
           if %w(development test).include?(Rails.env)
-            day.delay.add_user(User.create(:path => data[1].chop))
+            day.delay.delay_add_user(User.create(:path => data[1].chop))
           elsif Rails.env.production?
-            day.delay.add_user(User.create(:path => data[1]))
+            day.delay.delay_add_user(User.create(:path => data[1]))
           end
         end
       end
@@ -24,7 +28,7 @@ class Day < ActiveRecord::Base
     def generate_todays_userlist; generate_userlist(Date.today) end
   end
 
-  def add_user(user); self.users << user end
+  def delay_add_user(user); p self; self.users << user end
 
   private
 
