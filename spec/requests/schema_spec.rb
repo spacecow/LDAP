@@ -10,7 +10,7 @@ describe "schema" do
 
   it "gives info about date, users, space" do
     day = Factory(:day, :date => "2011-11-25")
-    day.users << Factory(:user, :path => "/home/test", :account_size => 12)
+    day.dailystats << create_stat("/home/test",12)
     visit schema_path
     table(0).should eq ["2011年11月25日", "1", "12"]
   end
@@ -28,9 +28,9 @@ describe "schema" do
     before(:each) do
       day24 = Day.create(:date => "2011-11-25")
       day25 = Day.create(:date => "2011-11-24")
-      day24.users << create_user("/home/testar",3)
-      day24.users << create_user("/home/tester",43)
-      day25.users << create_user("/home/test",123)
+      day24.dailystats << create_stat("/home/testar",3)
+      day24.dailystats << create_stat("/home/tester",43)
+      day25.dailystats << create_stat("/home/test",123)
       visit schema_path
     end
 

@@ -1,19 +1,15 @@
 <%= link_to t(:schema), schema_path %>
 <%= title @day.dateformat %>
-<%= subtitle pluralize(@users.count, "user") %>
+<%= subtitle pluralize(@stats.count, "user") %>
 <table>
   <tr>
-    <th><%= sortable 'path' %></th>
+    <th></th>
     <th><%= sortable 'account_size' %></th>
   </tr>
-<% @users.each do |user| %>
+<% @stats.each do |stat| %>
   <tr>
-    <td><%= user.path %></td>
-    <% if user.account_size.nil? %>
-      <% user.update_attribute(:account_size,'-') %>
-      <% user.delay.calculate_account_size %>
-    <% end %>
-    <td><%= user.account_size %></td>
+    <td><%= stat.user.path %></td>
+    <td><%= stat.account_size %></td>
   </tr>
 <% end %>
 </table>
