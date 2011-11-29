@@ -7,6 +7,16 @@ describe Day do
       day.date.should eq Date.today
     end
 
+    it "generates dailystat models" do
+      lambda{ Day.generate_todays_userlist
+      }.should change(Dailystat, :count).by(2)
+    end
+
+    it "generates user models" do
+      lambda{ Day.generate_todays_userlist
+      }.should change(User, :count).by(2)
+    end
+
     it "calculates the total user account size" do
       day = Day.generate_todays_userlist
       day.users_account_size_sum.should eq 16

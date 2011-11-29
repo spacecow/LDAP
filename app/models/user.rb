@@ -1,15 +1,6 @@
 class User < ActiveRecord::Base
-  belongs_to :day
-
-  before_create :calculate_account_size
-
-  def calculate_account_size
-    return if account_size != 0
-    self.account_size = %x[du -s #{path}].split[0]
-    if %w(development test).include?(Rails.env)
-      self.account_size = "-" if !$?.success?
-    end
-  end
+  has_many :dailystats, :dependent => :destroy
+  has_many :days, :through => :dailystats
 end
 
 

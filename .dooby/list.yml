@@ -17,3 +17,5 @@ fe3040: !ruby/object:Dooby::Task
   todo: user count cache column :done
 3e8228: !ruby/object:Dooby::Task 
   todo: sum account size cache column :done
+293fdf: !ruby/object:Dooby::Task 
+  todo: test dailystat migration :done

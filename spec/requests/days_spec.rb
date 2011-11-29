@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe "Days" do
+  context "links to" do
+    it "schedule" do
+      visit day_path Factory(:day)
+      click_link "Schema"
+    end
+  end
+
   context "sort for" do
     before(:each) do
       day = Factory(:day)

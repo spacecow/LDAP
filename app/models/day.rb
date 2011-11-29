@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Day < ActiveRecord::Base
-  has_many :users, :after_add => [:inc_users_count, :inc_account_size], :after_remove => [:dec_users_count, :dec_account_size]
+  has_many :dailystats, :dependent => :destroy, :after_add => [:inc_users_count, :inc_account_size], :after_remove => [:dec_users_count, :dec_account_size] 
+  has_many :users, :through => :dailystats 
 
   def dateformat; date.strftime("%Y年%m月%d日") end
 
@@ -15,10 +16,10 @@ class Day < ActiveRecord::Base
       File.open(path).each do |line|
         if data = line.match(/homeDirectory: (.*)/)
           if %w(development test).include?(Rails.env)
-            day.users << User.create(:path => data[1].chop)
+            day.dailystats << Dailystat.create(:path => data[1].chop)
             #day.delay.delay_add_user(User.create(:path => data[1].chop))
           elsif Rails.env.production?
-            day.users << User.create(:path => data[1])
+            day.dailystats << Dailystat.create(:path => data[1])
             #day.delay.delay_add_user(User.create(:path => data[1]))
           end
         end
@@ -35,16 +36,16 @@ class Day < ActiveRecord::Base
 
   private
 
-    def dec_account_size(user)
-      update_attribute(:users_account_size_sum, users_account_size_sum - user.account_size)
+    def dec_account_size(dailystat)
+      update_attribute(:users_account_size_sum, users_account_size_sum - dailystat.account_size)
     end
-    def dec_users_count(user)
+    def dec_users_count(dailystat)
       update_attribute(:users_count, users_count-1)
     end
-    def inc_account_size(user)
-      update_attribute(:users_account_size_sum, users_account_size_sum + user.account_size) 
+    def inc_account_size(dailystat)
+      update_attribute(:users_account_size_sum, users_account_size_sum + dailystat.account_size) 
     end
-    def inc_users_count(user)
+    def inc_users_count(dailystat)
       update_attribute(:users_count, users_count+1)
     end
 end

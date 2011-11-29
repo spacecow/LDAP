@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111128041535) do
+ActiveRecord::Schema.define(:version => 20111129044201) do
+
+  create_table "dailystats", :force => true do |t|
+    t.integer  "day_id"
+    t.integer  "user_id"
+    t.integer  "account_size", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "days", :force => true do |t|
     t.date     "date"
@@ -40,8 +48,6 @@ ActiveRecord::Schema.define(:version => 20111128041535) do
     t.string   "path"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "day_id"
-    t.integer  "account_size", :default => 0
   end
 
 end
