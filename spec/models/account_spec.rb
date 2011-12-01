@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe User do
+describe Account do
   it "calculate the size of the account" do
     #user = User.create(:path => "/home/test")
     #user.calculate_account_size

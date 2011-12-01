@@ -21,3 +21,5 @@ fe3040: !ruby/object:Dooby::Task
   todo: test dailystat migration :done
 347f37: !ruby/object:Dooby::Task 
   todo: rspec corrections after adding dailystat :done
+67b321: !ruby/object:Dooby::Task 
+  todo: rename users to account :done

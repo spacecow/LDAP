@@ -14,7 +14,7 @@ describe Day do
 
     it "generates user models" do
       lambda{ Day.generate_todays_userlist
-      }.should change(User, :count).by(2)
+      }.should change(Account, :count).by(2)
     end
 
     it "calculates the total user account size" do

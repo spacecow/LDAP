@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class Account < ActiveRecord::Base
   has_many :dailystats, :dependent => :destroy
   has_many :days, :through => :dailystats
 end

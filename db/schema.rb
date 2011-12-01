@@ -11,11 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111129044201) do
+ActiveRecord::Schema.define(:version => 20111201043858) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "dailystats", :force => true do |t|
     t.integer  "day_id"
-    t.integer  "user_id"
+    t.integer  "account_id"
     t.integer  "account_size", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -43,11 +49,5 @@ ActiveRecord::Schema.define(:version => 20111129044201) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
-  create_table "users", :force => true do |t|
-    t.string   "path"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end

@@ -3,6 +3,6 @@ LDAP::Application.routes.draw do
 
   match 'schema', :controller => 'operator', :action => 'schema'
   resources :days
-  resources :users
+  resources :accounts
   root :to => "operator#schema"
 end

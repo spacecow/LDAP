@@ -1,10 +1,11 @@
 class Dailystat < ActiveRecord::Base
   belongs_to :day
-  belongs_to :user
+  belongs_to :account
 
   attr_accessor :path
-
   before_create :calculate_account_size
+
+  def account_path; account.path end
 
   private
 
@@ -15,7 +16,7 @@ class Dailystat < ActiveRecord::Base
           self.account_size = "-" if !$?.success?
         end
       end
-      self.user_id = User.find_or_create_by_path(@path).id
+      self.account_id = Account.find_or_create_by_path(@path).id if account_id.nil?
     end
 end
 
