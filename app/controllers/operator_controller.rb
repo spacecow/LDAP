@@ -2,6 +2,7 @@ class OperatorController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def schema
+    redirect_to root_path and return unless current_user
     @days = Day.order(sort_column+" "+sort_direction)
   end
 

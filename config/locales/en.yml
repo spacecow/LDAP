@@ -1,2 +1,9 @@
 en:
+  login: "Login"
   schema: "Schema"
+
+  alerts:
+    invalid_login_or_password: "Invalid login or password."
+
+  notices:
+    logged_in: "Logged in."
