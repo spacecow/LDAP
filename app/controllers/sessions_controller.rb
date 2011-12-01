@@ -14,6 +14,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    session_userid(nil)
+    redirect_to login_path, :notice => notify(:logged_out)
   end
 
   private

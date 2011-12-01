@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-describe "schema", :focus => true do
+describe "schema" do
   it "lists logged days" do
     Day.create(:date => "2011-11-25")
     login
