@@ -1,9 +1,13 @@
 en:
+  del: "Del"
   login: "Login"
   schema: "Schema"
 
   alerts:
     invalid_login_or_password: "Invalid login or password."
+
+  messages:
+    sure?: "Are you sure?"
 
   notices:
     logged_in: "Logged in."

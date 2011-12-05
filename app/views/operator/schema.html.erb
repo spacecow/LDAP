@@ -3,12 +3,14 @@
     <th><%= sortable 'date' %></th>
     <th><%= sortable 'users_count', 'Accounts' %></th>
     <th><%= sortable 'users_account_size_sum', 'Account Size Sum' %></th>
+    <th>Actions</th>
   </tr>
   <% @days.each do |day| %>
     <tr>
       <td><%= link_to day.dateformat, day_path(day) %></td>
       <td><%= day.users_count %></td>
       <td><%= day.users_account_size_sum %></td>
+      <td><%= link_to t(:del), day, :confirm => sure?, :method => :delete %></td>
     </tr>
   <% end %>
 </table>

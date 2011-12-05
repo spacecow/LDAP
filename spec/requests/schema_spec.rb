@@ -14,7 +14,7 @@ describe "schema" do
     day.dailystats << create_stat("/home/test",12)
     login
     visit schema_path
-    table(0).should eq ["2011年11月25日", "1", "12"]
+    table(0).should eq ["2011年11月25日", "1", "12", "Del"]
   end
 
   context "link to" do
@@ -24,6 +24,21 @@ describe "schema" do
       visit schema_path
       click_link("2011年11月25日")
       page.current_path.should == day_path(day)
+    end
+
+    it "delete day" do
+      day = Factory(:day)
+      account = Factory(:account)
+      day.dailystats << Factory(:dailystat,:account_id=>account.id) 
+      login
+      visit schema_path
+      lambda do
+        lambda do
+          lambda do
+            click_link("Del")
+          end.should change(Dailystat,:count).by(-1)
+        end.should change(Day,:count).by(-1)
+      end.should change(User,:count).by(0)
     end
   end
 

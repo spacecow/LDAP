@@ -6,6 +6,11 @@ class DaysController < ApplicationController
     @stats = @day.dailystats.order(sort_column+" "+sort_direction)
   end
 
+  def destroy
+    Day.find(params[:id]).destroy
+    redirect_to schema_path
+  end
+
   private
 
     def sort_column
