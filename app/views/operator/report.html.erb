@@ -1,0 +1,18 @@
+<%= title @date.strftime("%Y-%m") %>
+
+<table>
+  <tr>
+    <th><%= jt(:user) %></th>
+    <th><%= jt(:path) %></th>
+    <th><%= jt(:days) %></th>
+    <th><%= jt(:avg_account_size) %></th>
+  </tr>
+<% @accounts.each do |k,v| %>
+  <tr>
+    <td><%= k.split('/')[-1] %></td>
+    <td><%= k %></td>
+    <td><%= v[:days] %></td>
+    <td><%= v[:size]/v[:days] %></td>
+  </tr>
+<% end %>
+</table>

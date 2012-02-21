@@ -1,0 +1,7 @@
+<div id="months">
+  <% months.each do |k,v| %>
+    <div class="month">
+      <%= link_to k, report_path(date:k) %>
+    </div>
+  <% end %>
+</div>

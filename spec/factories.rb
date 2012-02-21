@@ -1,12 +1,14 @@
-Factory.define :account do |f|
-end
+FactoryGirl.define do
+  factory :account do
+  end
 
-Factory.define :dailystat do |f|
-end
+  factory :dailystat do
+  end
 
-Factory.define :day do |f|
-  f.date "2011-11-28"
-end
+  factory :day do
+    date "2011-11-28"
+  end
 
-Factory.define :user do |f|
+  factory :user do
+  end
 end

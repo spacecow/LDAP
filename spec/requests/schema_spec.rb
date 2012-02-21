@@ -14,7 +14,7 @@ describe "schema" do
     day.dailystats << create_stat("/home/test",12)
     login
     visit schema_path
-    table(0).should eq ["2011年11月25日", "1", "12", "Del"]
+    tablerow(0).should eq ["2011年11月25日", "1", "12", "Del"]
   end
 
   context "link to" do
@@ -65,26 +65,26 @@ describe "schema" do
 
     it "Accounts ascending" do
       click_link "Accounts"
-      table(0,1).should have_content("1")
-      table(1,1).should have_content("2")
+      tablecell(0,1).should have_content("1")
+      tablecell(1,1).should have_content("2")
     end
     it "Accounts descending" do
       click_link "Accounts"
       click_link "Accounts"
-      table(0,1).should have_content("2")
-      table(1,1).should have_content("1")
+      tablecell(0,1).should have_content("2")
+      tablecell(1,1).should have_content("1")
     end
 
     it "Account Size ascending" do
       click_link "Account Size Sum"
-      table(0,2).should have_content("46")
-      table(1,2).should have_content("123")
+      tablecell(0,2).should have_content("46")
+      tablecell(1,2).should have_content("123")
     end
     it "Account size descending" do
       click_link "Account Size Sum"
       click_link "Account Size Sum"
-      table(0,2).should have_content("123")
-      table(1,2).should have_content("46")
+      tablecell(0,2).should have_content("123")
+      tablecell(1,2).should have_content("46")
     end
   end
 end

@@ -1,7 +1,14 @@
 en:
+  avg_account_size: "Avg. Account Size"
+  days: "Days"
   del: "Del"
   login: "Login"
+  logout: "Logout"
+  path: "Path"
+  report:
+    other: 'Reports'
   schema: "Schema"
+  user: "User"
 
   alerts:
     invalid_login_or_password: "Invalid login or password."

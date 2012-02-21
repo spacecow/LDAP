@@ -32,15 +32,15 @@ describe "Days" do
 #    end
 
     it "Account Size ascending (default)" do
-      table(0,1).should have_content("3")
-      table(1,1).should have_content("43")
-      table(2,1).should have_content("123")
+      tablecell(0,1).should have_content("3")
+      tablecell(1,1).should have_content("43")
+      tablecell(2,1).should have_content("123")
     end
     it "Account Size x 1 descending" do
       click_link "Account Size"
-      table(0,1).should have_content("123")
-      table(1,1).should have_content("43")
-      table(2,1).should have_content("3")
+      tablecell(0,1).should have_content("123")
+      tablecell(1,1).should have_content("43")
+      tablecell(2,1).should have_content("3")
     end
   end
 end
