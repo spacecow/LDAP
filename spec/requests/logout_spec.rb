@@ -1,1 +1,1 @@
-/home/johan/apps/basiq/spec/request/logout_spec.rb
+/home/staff/jsveholm/apps/basiq/spec/request/logout_spec.rb
