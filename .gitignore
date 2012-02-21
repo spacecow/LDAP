@@ -9,4 +9,4 @@ config/login.yml
 *.swo
 data/userlist.txt
 data/userlist_test.txt
-
+config/initializers/extensions/element.rb
