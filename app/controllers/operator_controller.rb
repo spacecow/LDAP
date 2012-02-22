@@ -16,6 +16,8 @@ class OperatorController < ApplicationController
         if @accounts[stat.account.path].nil?
           @accounts[stat.account.path] = {:days => 1} 
           @accounts[stat.account.path][:size] = stat.account_size
+          @accounts[stat.account.path][:gid] = stat.account_gid
+          @accounts[stat.account.path][:day_of_registation] = stat.account.days.first.date
         else
           @accounts[stat.account.path][:days] = @accounts[stat.account.path][:days]+1 
           @accounts[stat.account.path][:size] = @accounts[stat.account.path][:size]+stat.account_size 

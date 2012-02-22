@@ -24,7 +24,5 @@ class SessionsController < ApplicationController
 
   private
 
-    def authpam(login,password)
-      true if login == "test" && password == "secret"
-    end
+    def authpam(login,password); true if login == "test" && password == "secret" end
 end

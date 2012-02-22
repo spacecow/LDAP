@@ -3,7 +3,7 @@ class Account < ActiveRecord::Base
   has_many :days, :through => :dailystats
 
   def set_gid
-    data = %x[id #{path.split('/').last}].match(/gid=(.*?)\s/)
+    data = %x[id #{path.split('/').last}].match(/gid=(\d+)/)
     update_attribute(:gid,data[1]) if data
   end
 

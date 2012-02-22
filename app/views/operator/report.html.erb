@@ -3,16 +3,20 @@
 <table>
   <tr>
     <th><%= jt(:user) %></th>
+    <th><%= jt(:gid) %></th>
     <th><%= jt(:path) %></th>
     <th><%= jt(:days) %></th>
     <th><%= jt(:avg_account_size) %></th>
+    <th><%= jt(:day_of_registration) %></th>
   </tr>
 <% @accounts.each do |k,v| %>
   <tr>
     <td><%= k.split('/')[-1] %></td>
+    <td><%= v[:gid] %></td>
     <td><%= k %></td>
     <td><%= v[:days] %></td>
     <td><%= v[:size]/v[:days] %></td>
+    <td><%= v[:day_of_registation] %></td>
   </tr>
 <% end %>
 </table>

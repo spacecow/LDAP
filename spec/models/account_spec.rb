@@ -18,7 +18,7 @@ describe Account do
       Factory(:account,path:"/home/test")
       Account.last.gid.should be_nil
       Account.set_gids
-      Account.last.gid.should eq '1002(test)' 
+      Account.last.gid.should eq '1002' 
     end
 
     it "not on non-existing accounts" do

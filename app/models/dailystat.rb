@@ -5,6 +5,7 @@ class Dailystat < ActiveRecord::Base
   attr_accessor :path
   before_create :calculate_account_size
 
+  def account_gid; account.gid end
   def account_path; account.path end
 
   private

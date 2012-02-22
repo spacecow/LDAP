@@ -1,7 +1,9 @@
 en:
   avg_account_size: "Avg. Account Size"
+  day_of_registration: "Day of Registation"
   days: "Days"
   del: "Del"
+  gid: "GID"
   login: "Login"
   logout: "Logout"
   path: "Path"
