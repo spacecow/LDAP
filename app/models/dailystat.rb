@@ -16,7 +16,11 @@ class Dailystat < ActiveRecord::Base
           self.account_size = "-" if !$?.success?
         end
       end
-      self.account_id = Account.find_or_create_by_path(@path).id if account_id.nil?
+      if account_id.nil?
+        account = Account.find_or_create_by_path(@path)
+        account.set_gid
+        self.account_id = account.id
+      end 
     end
 end
 

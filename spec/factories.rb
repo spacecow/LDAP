@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :account do
+    path "/home/test"
   end
 
   factory :dailystat do

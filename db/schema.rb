@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111201075333) do
+ActiveRecord::Schema.define(:version => 20120222082320) do
 
   create_table "accounts", :force => true do |t|
     t.string   "path"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "gid"
   end
 
   create_table "dailystats", :force => true do |t|

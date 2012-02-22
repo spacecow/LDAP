@@ -12,6 +12,22 @@ describe Account do
     stat = create_stat("/home/ghost")
     stat.account_size.should eq 0
   end
+
+  context "#set_gids" do
+    it "on existing accounts without gid" do
+      Factory(:account,path:"/home/test")
+      Account.last.gid.should be_nil
+      Account.set_gids
+      Account.last.gid.should eq '1002(test)' 
+    end
+
+    it "not on non-existing accounts" do
+      Factory(:account,path:"/home/foweifj")
+      Account.last.gid.should be_nil
+      Account.set_gids
+      Account.last.gid.should be_nil
+    end
+  end
 end
 
 
