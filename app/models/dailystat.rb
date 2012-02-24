@@ -1,12 +1,21 @@
 class Dailystat < ActiveRecord::Base
   belongs_to :day
   belongs_to :account
+  belongs_to :monthstat
 
   attr_accessor :path
   before_create :calculate_account_size
 
   def account_gid; account.gid end
   def account_path; account.path end
+
+  class << self
+
+    def all_in_month(date)
+      where("days.date >= :start_date and days.date <= :end_date", {start_date:date.beginning_of_month, end_date:date.end_of_month}).includes(:day) 
+    end
+
+  end
 
   private
 
@@ -19,10 +28,10 @@ class Dailystat < ActiveRecord::Base
       end
       if account_id.nil?
         account = Account.find_or_create_by_path(@path)
-        account.set_gid
         self.account_id = account.id
       end 
     end
+
 end
 
 # == Schema Information

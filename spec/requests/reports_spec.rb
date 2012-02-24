@@ -33,7 +33,7 @@ describe "reports" do
 
     it "has year-month link" do
       div('month',0).click_link('2011-11')
-      current_path.should eq report_path
+      current_path.should eq report_path(Report.last)
       page.should have_title('2011-11')
     end
   end

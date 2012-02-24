@@ -27,5 +27,11 @@ b819f4: !ruby/object:Dooby::Task
   todo: login :done
 e71f80: !ruby/object:Dooby::Task 
   todo: implement a role mask
-46b493: !ruby/object:Dooby::Task 
-  todo: delete a day and all its stats :doing
+8aecbe: !ruby/object:Dooby::Task 
+  todo: delete a day and all its stats
+768b8f: !ruby/object:Dooby::Task 
+  todo: make report to csv
+d5e55a: !ruby/object:Dooby::Task 
+  todo: make a report model :done
+bbb581: !ruby/object:Dooby::Task 
+  todo: make columns in report asc/desc :done

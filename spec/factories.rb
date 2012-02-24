@@ -10,6 +10,13 @@ FactoryGirl.define do
     date "2011-11-28"
   end
 
+  factory :monthstat do
+    path "/home/factory"
+  end
+
+  factory :report do
+  end
+
   factory :user do
   end
 end

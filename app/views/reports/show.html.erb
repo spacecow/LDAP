@@ -1,0 +1,3 @@
+<%= title @report.date.strftime("%Y-%m") %>
+
+<%= render 'monthstats', monthstats:@monthstats unless @monthstats.empty? %>

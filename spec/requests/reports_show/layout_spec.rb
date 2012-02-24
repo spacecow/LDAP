@@ -1,0 +1,130 @@
+require 'spec_helper'
+
+describe "report", focus:true do
+  before(:each) do
+    login 
+    @report = Factory(:report,date:Date.parse('2011-11-01'))
+  end
+
+  context "show: layout, without monthstats" do
+    before(:each) do
+      visit report_path(@report)
+    end
+
+    it "has a title" do
+      page.should have_title('2011-11')
+    end
+
+    it "has no monthstats table" do
+      page.should_not have_a_table('monthstats')
+    end
+  end #layout, without days
+
+  context "show: layout, with monthstats" do
+    before(:each) do
+      day = Factory(:day, date:'2011-11-25')
+      account = Factory(:account, path:'/home/test')
+      day.dailystats << Dailystat.create(path:'/home/test')
+      #Factory(:monthstat,report_id:@report.id,account_id:account.id,avg_account_size:12)
+      visit report_path(@report)
+    end
+
+    it "has a monthstats table" do
+      page.should have_a_table('monthstats')
+    end
+
+    it "has a tableheader" do
+      tableheader('monthstats').should eq ["Userid","GID","Path","Days","Avg. Account Size","Day of Registration"]
+    end
+
+    it "has rows in the table" do
+      tablemap('monthstats').should eq [["test","1002","/home/test","1","12","2011-11-25"]] 
+    end
+  end #show: layout, with monthstats
+
+  context "show: layout, sort on columns" do
+    before(:each) do
+      day = Factory(:day, date:'2011-11-25')
+      account = Factory(:account, path:'/home/test')
+      day.dailystats << Dailystat.create(path:'/home/test')
+      day = Factory(:day, date:'2011-11-26')
+      account = Factory(:account, path:'/home/tester')
+      day.dailystats << Dailystat.create(path:'/home/tester')
+      visit report_path(@report)
+    end
+
+    it "has rows in the table" do
+      tablemap('monthstats').should eq [["test","1002","/home/test","1","12","2011-11-25"],["tester","1004","/home/tester","1","4","2011-11-26"]] 
+    end
+
+    it "Userid ascending (default)" do
+      tablecell(0,0).should have_content("test")
+      tablecell(1,0).should have_content("tester")
+    end
+    it "Userid descending" do
+      table('monthstats').click_link "Userid"
+      tablecell(0,0).should have_content("tester")
+      tablecell(1,0).should have_content("test")
+    end
+
+    it "GID ascending" do
+      table('monthstats').click_link "GID"
+      tablecell(0,1).should have_content("1002")
+      tablecell(1,1).should have_content("1004")
+    end
+    it "GID descending" do
+      table('monthstats').click_link "GID"
+      table('monthstats').click_link "GID"
+      tablecell(0,1).should have_content("1004")
+      tablecell(1,1).should have_content("1002")
+    end
+
+    it "Path ascending" do
+      table('monthstats').click_link "Path"
+      tablecell(0,2).should have_content("/home/test")
+      tablecell(1,2).should have_content("/home/tester")
+    end
+    it "Path descending" do
+      table('monthstats').click_link "Path"
+      table('monthstats').click_link "Path"
+      tablecell(0,2).should have_content("/home/tester")
+      tablecell(1,2).should have_content("/home/test")
+    end
+
+    it "Days ascending" do
+      table('monthstats').click_link "Days"
+      tablecell(0,3).should have_content("1")
+      tablecell(1,3).should have_content("1")
+    end
+    it "Days descending" do
+      table('monthstats').click_link "Days"
+      table('monthstats').click_link "Days"
+      tablecell(0,3).should have_content("1")
+      tablecell(1,3).should have_content("1")
+    end
+
+    it "Avg. Account Size ascending" do
+      table('monthstats').click_link "Avg. Account Size"
+      tablecell(0,4).should have_content("4")
+      tablecell(1,4).should have_content("12")
+    end
+    it "Avg. Account Size descending" do
+      table('monthstats').click_link "Avg. Account Size"
+      table('monthstats').click_link "Avg. Account Size"
+      tablecell(0,4).should have_content("12")
+      tablecell(1,4).should have_content("4")
+    end
+
+    it "Day of Registration ascending" do
+      table('monthstats').click_link "Day of Registration"
+      tablecell(0,5).should have_content("2011-11-25")
+      tablecell(1,5).should have_content("2011-11-26")
+    end
+    it "Day of Registration descending" do
+      table('monthstats').click_link "Day of Registration"
+      table('monthstats').click_link "Day of Registration"
+      tablecell(0,5).should have_content("2011-11-26")
+      tablecell(1,5).should have_content("2011-11-25")
+    end
+  end
+end

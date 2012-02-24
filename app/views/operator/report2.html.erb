@@ -10,7 +10,7 @@
     <th><%= jt(:day_of_registration) %></th>
   </tr>
 <% @accounts.each do |k,v| %>
-  <tr>
+  <tr class="<%= v[:gid].nil? ? 'dead' : '' %> <%= v[:size] == 0 ? 'empty' : '' %>">
     <td><%= k.split('/')[-1] %></td>
     <td><%= v[:gid] %></td>
     <td><%= k %></td>
@@ -20,3 +20,5 @@
   </tr>
 <% end %>
 </table>
+
+<%# button_to 'CSV', report_path(date:@date.strftime("%Y-%m"), :format => :csv), :method => :get %>

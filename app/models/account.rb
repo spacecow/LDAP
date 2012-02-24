@@ -1,17 +1,25 @@
 class Account < ActiveRecord::Base
+  before_create :set_gid
+
   has_many :dailystats, :dependent => :destroy
   has_many :days, :through => :dailystats
 
-  def set_gid
-    data = %x[id #{path.split('/').last}].match(/gid=(\d+)/)
-    update_attribute(:gid,data[1]) if data
-  end
+  has_many :monthstats
 
   class << self
     def set_gids
       Account.all.map(&:set_gid)
     end
   end
+
+  private 
+
+    def set_gid
+      data = %x[id #{path.split('/').last}].match(/gid=(\d+)/)
+      self.gid = data[1] if data
+      #update_attribute(:gid,data[1]) if data
+    end
+
 end
 
 

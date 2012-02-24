@@ -6,6 +6,7 @@ class Day < ActiveRecord::Base
   def dateformat; date.strftime("%Y年%m月%d日") end
 
   class << self
+
     def generate_userlist(s)
       day = Day.create(:date => s)
       path = "data/userlist_test.txt"

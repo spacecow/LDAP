@@ -44,3 +44,11 @@ table td {
   padding-right: 2px;
   border: 1px solid black;
 }
+/* line 26, ../../app/stylesheets/application.sass */
+table tr.dead {
+  background: red;
+}
+/* line 28, ../../app/stylesheets/application.sass */
+table tr.empty {
+  background: orangered;
+}

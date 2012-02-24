@@ -16,15 +16,11 @@ describe Account do
   context "#set_gids" do
     it "on existing accounts without gid" do
       Factory(:account,path:"/home/test")
-      Account.last.gid.should be_nil
-      Account.set_gids
       Account.last.gid.should eq '1002' 
     end
 
     it "not on non-existing accounts" do
       Factory(:account,path:"/home/foweifj")
-      Account.last.gid.should be_nil
-      Account.set_gids
       Account.last.gid.should be_nil
     end
   end
