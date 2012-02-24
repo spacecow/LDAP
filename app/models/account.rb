@@ -6,6 +6,8 @@ class Account < ActiveRecord::Base
 
   has_many :monthstats
 
+  validates_uniqueness_of :path
+
   class << self
     def set_gids
       Account.all.map(&:set_gid)

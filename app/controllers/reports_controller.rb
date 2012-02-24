@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
     stats = Dailystat.all_in_month(@report.date).where("monthstat_id is NULL")
 
     stats.each do |stat|
-      if stat.account.monthstats.empty?
+      if !stat.account.monthstats.map(&:report).include?(@report)
         monthstat = Monthstat.create!(report_id:@report.id, account_id:stat.account.id, day_of_registration:stat.account.days.order(:date).first.date, avg_account_size:stat.account_size)
         monthstat.dailystats << stat
       else
@@ -21,7 +21,7 @@ class ReportsController < ApplicationController
       end
     end
 
-    @monthstats = Monthstat.order(sort_column+" "+sort_direction)
+    @monthstats = @report.monthstats.order(sort_column+" "+sort_direction)
   end
 
   def index

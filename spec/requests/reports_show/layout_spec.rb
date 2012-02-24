@@ -20,12 +20,42 @@ describe "report", focus:true do
     end
   end #layout, without days
 
-  context "show: layout, with monthstats" do
+  context "show: layout, with monthstats in different reports" do
+    before(:each) do
+      day = Factory(:day, date:'2011-11-25')
+      account = Factory(:account, path:'/home/test')
+      stat = Dailystat.create(path:'/home/test')
+      day.dailystats << stat
+      mstat = Factory(:monthstat,report_id:@report.id,account_id:account.id,avg_account_size:12)
+      mstat.dailystats << stat
+
+      @report2 = Factory(:report,date:Date.parse('2011-12-01'))
+      day2 = Factory(:day, date:'2011-12-20')
+      day2.dailystats << Dailystat.create(path:'/home/test')
+    end
+
+    it "has a title" do
+      visit report_path(@report2)
+      page.should have_title('2011-12')
+    end
+
+    it "an account has a monthstat in each month" do
+      lambda do
+        visit report_path(@report2)
+      end.should change(Monthstat,:count).by(1)
+    end
+
+    it "has rows in the table" do
+      visit report_path(@report2)
+      tablemap('monthstats').should eq [["test","1002","/home/test","1","12","2011-11-25"]] 
+    end
+  end #show: layout, with monthstats
+
+  context "show: layout, with monthstats not reported" do
     before(:each) do
       day = Factory(:day, date:'2011-11-25')
       account = Factory(:account, path:'/home/test')
       day.dailystats << Dailystat.create(path:'/home/test')
-      #Factory(:monthstat,report_id:@report.id,account_id:account.id,avg_account_size:12)
       visit report_path(@report)
     end
 
