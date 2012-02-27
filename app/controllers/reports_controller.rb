@@ -7,18 +7,7 @@ class ReportsController < ApplicationController
     stats = Dailystat.all_in_month(@report.date).where("monthstat_id is NULL")
 
     stats.each do |stat|
-      if !stat.account.monthstats.map(&:report).include?(@report)
-        monthstat = Monthstat.create!(report_id:@report.id, account_id:stat.account.id, day_of_registration:stat.account.days.order(:date).first.date, avg_account_size:stat.account_size)
-        monthstat.dailystats << stat
-      else
-        #binding.pry
-        stat.account.monthstats.select{|e| e.report==@report}.each do |monthstat|
-          monthstat.recalculate_avg_account_size(stat.account_size)
-          monthstat.increase_days
-          monthstat.save
-          stat.update_attribute(:monthstat_id,monthstat.id) 
-        end
-      end
+      stat.create_or_update_monthstats(@report)
     end
 
     @monthstats = @report.monthstats.order(sort_column+" "+sort_direction)

@@ -10,6 +10,7 @@ describe "schema" do
   end
 
   it "gives info about date, users, space" do
+    account = Factory(:account, path:'/home/test')
     day = Factory(:day, :date => "2011-11-25")
     day.dailystats << create_stat("/home/test",12)
     login
@@ -28,8 +29,9 @@ describe "schema" do
 
     it "delete day" do
       day = Factory(:day)
-      account = Factory(:account)
-      day.dailystats << Factory(:dailystat,:account_id=>account.id) 
+      account = Factory(:account, path:'/home/test')
+      #day.dailystats << Factory(:dailystat,:account_id=>account.id) 
+      day.dailystats << create_stat("/home/test") 
       login
       visit schema_path
       lambda do
@@ -44,8 +46,8 @@ describe "schema" do
 
   context "sort for" do
     before(:each) do
-      day24 = Day.create(:date => "2011-11-25")
-      day25 = Day.create(:date => "2011-11-24")
+      day24 = Day.create(:date => "2011-11-24")
+      day25 = Day.create(:date => "2011-11-25")
       day24.dailystats << create_stat("/home/testar",3)
       day24.dailystats << create_stat("/home/tester",43)
       day25.dailystats << create_stat("/home/test",123)
@@ -77,6 +79,7 @@ describe "schema" do
 
     it "Account Size ascending" do
       click_link "Account Size Sum"
+save_and_open_page
       tablecell(0,2).should have_content("46")
       tablecell(1,2).should have_content("123")
     end

@@ -47,3 +47,5 @@ bbb581: !ruby/object:Dooby::Task
   todo: xsl renderer :done
 0207c1: !ruby/object:Dooby::Task 
   todo: "monthstat: update status :done"
+657ba4: !ruby/object:Dooby::Task 
+  todo: create report and mstat on when dailystat :done

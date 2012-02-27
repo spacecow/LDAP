@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "report", focus:true do
+describe "report" do
   before(:each) do
     login 
     @report = Factory(:report,date:Date.parse('2011-11-01'))
@@ -27,7 +27,7 @@ describe "report", focus:true do
       stat = Dailystat.create(path:'/home/test')
       day.dailystats << stat
       mstat = Factory(:monthstat,report_id:@report.id,account_id:account.id,avg_account_size:12)
-      mstat.dailystats << stat
+      mstat.dailystats << Dailystat.last 
 
       @report2 = Factory(:report,date:Date.parse('2011-12-01'))
       day2 = Factory(:day, date:'2011-12-20')
@@ -76,9 +76,11 @@ describe "report", focus:true do
     before(:each) do
       day = Factory(:day, date:'2011-11-25')
       account = Factory(:account, path:'/home/test')
+      #day.accounts << account
       day.dailystats << Dailystat.create(path:'/home/test')
       day = Factory(:day, date:'2011-11-26')
       account = Factory(:account, path:'/home/tester')
+      #day.accounts << account
       day.dailystats << Dailystat.create(path:'/home/tester')
       visit report_path(@report)
     end

@@ -6,7 +6,7 @@ class Monthstat < ActiveRecord::Base
   has_many :dailystats
   belongs_to :account
 
-  validates_presence_of :report, :account
+  validates_presence_of :report, :account, :avg_account_size
 
   attr_accessible :report_id, :account_id, :avg_account_size
 
@@ -14,6 +14,7 @@ class Monthstat < ActiveRecord::Base
   def recalculate_avg_account_size(account_size)
     self.avg_account_size = (self.avg_account_size*self.days + account_size)/(self.days+1)
   end
+  def set_status; self.status = get_status end
 
   class << self
     def update_gids
@@ -54,7 +55,6 @@ class Monthstat < ActiveRecord::Base
     def set_days; self.days = 1 end
     def set_gid; self.gid = account.gid end
     def set_path; self.path = account.path end
-    def set_status; self.status = get_status end
     def set_userid; self.userid = path.split('/')[-1] end
 
 end

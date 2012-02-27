@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class Day < ActiveRecord::Base
   has_many :dailystats, :dependent => :destroy, :after_add => [:inc_users_count, :inc_account_size], :after_remove => [:dec_users_count, :dec_account_size] 
-  has_many :accounts, :through => :dailystats 
+  has_many :accounts, :through => :dailystats
 
   def dateformat; date.strftime("%Y年%m月%d日") end
 
@@ -17,11 +17,20 @@ class Day < ActiveRecord::Base
       end
       File.open(path).each do |line|
         if data = line.match(/homeDirectory: (.*)/)
+          report_date = s.strftime("%Y-%m-01")
           if %w(development test).include?(Rails.env)
-            day.dailystats << Dailystat.create(:path => data[1].chop)
+            #day.accounts << Account.find_or_create_by_path(data[1])
+            stat = Dailystat.create(:path => data[1].chop)
+            day.dailystats << stat
+            report = Report.find_or_create_by_date(report_date)
+            stat.create_or_update_monthstats(report)
             #day.delay.delay_add_user(User.create(:path => data[1].chop))
           elsif Rails.env.production?
-            day.dailystats << Dailystat.create(:path => data[1])
+            #day.accounts << Account.find_or_create_by_path(data[1])
+            stat = Dailystat.create(:path => data[1])
+            day.dailystats << stat
+            report = Report.find_or_create_by_date(report_date)
+            stat.create_or_update_monthstats(report)
             #day.delay.delay_add_user(User.create(:path => data[1]))
           end
         end
@@ -31,7 +40,7 @@ class Day < ActiveRecord::Base
 
     def generate_todays_userlist;
       generate_userlist(Date.today)
-     end
+    end
   end
 
   def delay_add_user(user); self.users << user end

@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Dailystat do
   describe "#calculate_account_size" do
     before(:each) do
+      day = Factory(:day)
+      account = Factory(:account, path:'/home/test')
+      #day.accounts << account
+      #@stat = Dailystat.last
       @stat = Dailystat.create(path:"/home/test")
     end
 
