@@ -32,7 +32,6 @@ describe Account do
       Account.update_gids
       Account.last.gid.should eq '1002(test)' 
     end
-
   end
 end
 

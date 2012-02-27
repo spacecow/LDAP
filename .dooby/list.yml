@@ -45,3 +45,5 @@ bbb581: !ruby/object:Dooby::Task
   todo: add correct colouring :done
 "912590": !ruby/object:Dooby::Task 
   todo: xsl renderer :done
+0207c1: !ruby/object:Dooby::Task 
+  todo: "monthstat: update status :done"
