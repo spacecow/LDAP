@@ -9,9 +9,14 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :path
 
   class << self
-    def set_gids
-      Account.all.map(&:set_gid)
+    def update_gids
+      Account.all.map(&:update_gid)
     end
+  end
+
+  def update_gid
+    data = %x[id #{path.split('/').last}].match(/gid=(.+?)\s/)
+    update_attribute(:gid,data[1]) if data
   end
 
   private 

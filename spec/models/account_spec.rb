@@ -13,16 +13,26 @@ describe Account do
     stat.account_size.should eq 0
   end
 
-  context "#set_gids" do
-    it "on existing accounts without gid" do
+  context "on creation" do
+    it "gid is set for existing account" do
       Factory(:account,path:"/home/test")
       Account.last.gid.should eq '1002(test)' 
     end
-
-    it "not on non-existing accounts" do
+    it "not set for non-existing accounts" do
       Factory(:account,path:"/home/foweifj")
       Account.last.gid.should be_nil
     end
+  end
+
+  context "#set_gids" do
+    it "on existing accounts without gid" do
+      account = Factory(:account,path:"/home/test")
+      account.update_attribute(:gid,"wrong")
+      Account.last.gid.should eq 'wrong' 
+      Account.update_gids
+      Account.last.gid.should eq '1002(test)' 
+    end
+
   end
 end
 
