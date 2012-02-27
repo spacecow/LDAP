@@ -15,10 +15,20 @@ class Monthstat < ActiveRecord::Base
     self.avg_account_size = (self.avg_account_size*self.days + account_size)/(self.days+1)
   end
 
+  class << self
+    def update_gids
+      Monthstat.all.map(&:update_gid)
+    end
+  end
+
+  def update_gid
+    update_attribute(:gid,account.gid)
+  end
+
   private
 
     def set_day_of_registration
-      self.day_of_registration = account.days.order(:date).first.date
+      self.day_of_registration = account.days.order(:date).first.date unless account.days.empty?
     end
     def set_days; self.days = 1 end
     def set_gid; self.gid = account.gid end

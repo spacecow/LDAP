@@ -15,6 +15,7 @@ FactoryGirl.define do
   end
 
   factory :report do
+    date Date.parse('2011-11-01')
   end
 
   factory :user do

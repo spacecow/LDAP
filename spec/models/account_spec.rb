@@ -24,7 +24,7 @@ describe Account do
     end
   end
 
-  context "#set_gids" do
+  context "#update_gids" do
     it "on existing accounts without gid" do
       account = Factory(:account,path:"/home/test")
       account.update_attribute(:gid,"wrong")
