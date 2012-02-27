@@ -47,7 +47,7 @@ describe "report", focus:true do
 
     it "has rows in the table" do
       visit report_path(@report2)
-      tablemap('monthstats').should eq [["test","1002","/home/test","1","12","2011-11-25"]] 
+      tablemap('monthstats').should eq [["test","1002(test)","/home/test","1","12","2011-11-25"]] 
     end
   end #show: layout, with monthstats
 
@@ -68,7 +68,7 @@ describe "report", focus:true do
     end
 
     it "has rows in the table" do
-      tablemap('monthstats').should eq [["test","1002","/home/test","1","12","2011-11-25"]] 
+      tablemap('monthstats').should eq [["test","1002(test)","/home/test","1","12","2011-11-25"]] 
     end
   end #show: layout, with monthstats
 
@@ -84,7 +84,7 @@ describe "report", focus:true do
     end
 
     it "has rows in the table" do
-      tablemap('monthstats').should eq [["test","1002","/home/test","1","12","2011-11-25"],["tester","1004","/home/tester","1","4","2011-11-26"]] 
+      tablemap('monthstats').should eq [["test","1002(test)","/home/test","1","12","2011-11-25"],["tester","1004(tester)","/home/tester","1","4","2011-11-26"]] 
     end
 
     it "Userid ascending (default)" do
@@ -99,8 +99,8 @@ describe "report", focus:true do
 
     it "GID ascending" do
       table('monthstats').click_link "GID"
-      tablecell(0,1).should have_content("1002")
-      tablecell(1,1).should have_content("1004")
+      tablecell(0,1).should have_content("1002(test)")
+      tablecell(1,1).should have_content("1004(tester)")
     end
     it "GID descending" do
       table('monthstats').click_link "GID"

@@ -19,7 +19,7 @@ describe Dailystat do
     end 
 
     it "the account get its gid set" do
-      Account.last.gid.should eq '1002'
+      Account.last.gid.should eq '1002(test)'
     end 
   end
 end

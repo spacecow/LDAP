@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :account_exists?, :path_exists?
 
   def show
     redirect_to login_path and return unless current_user
@@ -22,6 +22,35 @@ class ReportsController < ApplicationController
     end
 
     @monthstats = @report.monthstats.order(sort_column+" "+sort_direction)
+
+    respond_to do |f|
+      f.html
+      f.xls do
+        book = Spreadsheet::Workbook.new
+        sheet = book.create_worksheet :name => "LDAP"
+        dead = Spreadsheet::Format.new :color => :red
+        empty = Spreadsheet::Format.new :color => :orange 
+        sheet.row(1).default_format = dead 
+        sheet.row(2).default_format = empty 
+        sheet.row(0).concat ["Userid","GID","Path","Days","Avg. Account Size", "Day of Registration"]
+        @monthstats.each_with_index do |mstat,i|
+          sheet.row(1+i).default_format = empty if !path_exists?(mstat.userid)
+          sheet.row(1+i).default_format = dead if !account_exists?(mstat.userid)
+          sheet.row(1+i).concat [mstat.userid,mstat.gid,mstat.path,mstat.days,mstat.avg_account_size.to_digits.to_i,mstat.day_of_registration]
+        end
+
+        file = "private/reports/#{Date.today.strftime('%Y-%m-%d')}-report-#{@report.date.strftime('%Y-%m')}.xls" 
+        book.write file
+        send_file file, :content_type => "application/vnd.ms-excel",
+      end
+      #do
+      #  Spreadsheet.client_encoding = 'UTF-8'
+      #  book = Spreadsheet::Workbook.new
+      #  sheet = book.create_worksheet :name => "LDAP"
+      #  sheet.row(0).concat %w(Name)
+      #  render :xsl => sheet
+      #end
+    end
   end
 
   def index
@@ -33,6 +62,12 @@ class ReportsController < ApplicationController
   end
 
   private
+
+    def account_exists?(userid)
+      data = %x[id #{userid}].match(/gid=(\d+)/)
+      data
+    end
+    def path_exists?(path) File.directory?(path) end
 
     def sort_column
       Monthstat.column_names.include?(params[:sort]) ? params[:sort] : 'userid'

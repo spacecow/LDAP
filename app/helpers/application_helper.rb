@@ -6,4 +6,6 @@ module ApplicationHelper
     direction = col == sort_column && sort_direction == 'asc' ? 'desc' : 'asc'
     link_to title, {:sort => col, :direction => direction}, {:class => css_class}
   end
+
+
 end

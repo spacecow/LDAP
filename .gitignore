@@ -10,3 +10,4 @@ config/login.yml
 data/userlist.txt
 data/userlist_test.txt
 config/initializers/extensions/element.rb
+private/reports

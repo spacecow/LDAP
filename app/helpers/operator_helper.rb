@@ -1,12 +1,14 @@
 require 'csv'
+#require 'fastercsv/lib/faster_csv'
 
 module OperatorHelper
   def turn_to_csv 
     CSV.generate do |csv| 
-      #Product.find(:all).each do |product|
-      #  csv << ... add stuff here ...
-      #end
-      csv << Day.first
+      cols = ["column one", "column two", "column three"]
+      csv << cols
+      @monthstats.each do |mstat|
+        csv << [mstat.userid, mstat.path]
+      end
     end
   end
 end

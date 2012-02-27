@@ -17,7 +17,7 @@ class Account < ActiveRecord::Base
   private 
 
     def set_gid
-      data = %x[id #{path.split('/').last}].match(/gid=(\d+)/)
+      data = %x[id #{path.split('/').last}].match(/gid=(.+?)\s/)
       self.gid = data[1] if data
       #update_attribute(:gid,data[1]) if data
     end

@@ -1,4 +1,4 @@
-<tr>
+<tr class="<%= account_exists?(monthstat.userid) ? '' : 'dead' %> <%= path_exists?(monthstat.path) ? '' : 'empty' %>">
   <td><%= monthstat.userid %></td>
   <td><%= monthstat.gid %></td>
   <td><%= monthstat.path %></td>

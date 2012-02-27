@@ -33,7 +33,7 @@ describe "report" do
       Monthstat.last.userid.should eq 'tester'
     end
     it "the monthstat gets its gid set" do
-      Monthstat.last.gid.should eq '1004'
+      Monthstat.last.gid.should eq '1004(tester)'
     end
     it "the monthstat gets its day set" do
       Monthstat.last.days.should be(1)
@@ -93,7 +93,7 @@ describe "report" do
       Monthstat.last.userid.should eq 'tester'
     end
     it "the monthstat has its gid set" do
-      Monthstat.last.gid.should eq '1004'
+      Monthstat.last.gid.should eq '1004(tester)'
     end
     it "the monthstat gets its day increased" do
       Monthstat.last.days.should eq 2

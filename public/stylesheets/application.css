@@ -45,10 +45,10 @@ table td {
   border: 1px solid black;
 }
 /* line 26, ../../app/stylesheets/application.sass */
-table tr.dead {
-  background: red;
+table tr.empty {
+  color: orangered;
 }
 /* line 28, ../../app/stylesheets/application.sass */
-table tr.empty {
-  background: orangered;
+table tr.dead {
+  color: red;
 }

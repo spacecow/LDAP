@@ -35,9 +35,13 @@ d5e55a: !ruby/object:Dooby::Task
   todo: make a report model :done
 bbb581: !ruby/object:Dooby::Task 
   todo: make columns in report asc/desc :done
-20f903: !ruby/object:Dooby::Task 
-  todo: add correct colouring
 9d1094: !ruby/object:Dooby::Task 
   todo: add colouring in csv
 9a6889: !ruby/object:Dooby::Task 
   todo: different reports rspec :done
+2a5ef3: !ruby/object:Dooby::Task 
+  todo: change gid to xx(xx)
+6c2b6a: !ruby/object:Dooby::Task 
+  todo: add correct colouring :done
+a67353: !ruby/object:Dooby::Task 
+  todo: xsl renderer :doing
