@@ -8,6 +8,8 @@ LDAP::Application.routes.draw do
   get 'schema' => 'operator#schema'
 
   resources :reports, :only => [:show,:index]
+  #match "/reports/:id.:format)", :to => "reports#show"
+
   resources :days
   resources :accounts
 
