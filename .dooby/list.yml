@@ -43,5 +43,5 @@ bbb581: !ruby/object:Dooby::Task
   todo: change gid to xx(xx)
 6c2b6a: !ruby/object:Dooby::Task 
   todo: add correct colouring :done
-a67353: !ruby/object:Dooby::Task 
-  todo: xsl renderer :doing
+"912590": !ruby/object:Dooby::Task 
+  todo: xsl renderer :done
