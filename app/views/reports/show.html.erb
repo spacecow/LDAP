@@ -1,6 +1,6 @@
 <%= title @report.date.strftime("%Y-%m") %>
 
-<%= link_to 'Output to CSV', report_path(sort:params[:sort], direction:params[:direction], :format => :xls) %>
+<%= link_to 'Output to XLS', report_path(sort:params[:sort], direction:params[:direction], :format => :xls) %>
 
 <%= render 'monthstats', monthstats:@monthstats unless @monthstats.empty? %>
 
