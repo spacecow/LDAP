@@ -27,7 +27,10 @@ class Monthstat < ActiveRecord::Base
   end
 
   def update_gid
-    update_attribute(:gid,account.gid)
+    data = account.gid.match(/(\d+)\((.+)\)/) if account.gid
+    self.gid_num = data[1] if data
+    self.gid_string = data[2] if data
+    save
   end
 
   def update_status
@@ -53,7 +56,11 @@ class Monthstat < ActiveRecord::Base
       self.day_of_registration = account.days.order(:date).first.date unless account.days.empty?
     end
     def set_days; self.days = 1 end
-    def set_gid; self.gid = account.gid end
+    def set_gid
+      data = account.gid.match(/(\d+)\((.+)\)/) if account.gid
+      self.gid_num = data[1] if data
+      self.gid_string = data[2] if data
+    end
     def set_path; self.path = account.path end
     def set_userid; self.userid = path.split('/')[-1] end
 

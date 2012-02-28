@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120227071123) do
+ActiveRecord::Schema.define(:version => 20120228023419) do
 
   create_table "accounts", :force => true do |t|
     t.string   "path"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20120227071123) do
     t.integer  "report_id"
     t.integer  "account_id"
     t.string   "userid"
-    t.string   "gid"
+    t.string   "gid_string"
     t.string   "path"
     t.integer  "days"
     t.decimal  "avg_account_size",    :precision => 12, :scale => 2
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20120227071123) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"
+    t.integer  "gid_num"
   end
 
   create_table "reports", :force => true do |t|

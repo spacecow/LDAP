@@ -46,7 +46,7 @@ table td {
 }
 /* line 26, ../../app/stylesheets/application.sass */
 table tr.empty {
-  color: orangered;
+  color: orange;
 }
 /* line 28, ../../app/stylesheets/application.sass */
 table tr.dead {

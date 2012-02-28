@@ -79,7 +79,6 @@ describe "schema" do
 
     it "Account Size ascending" do
       click_link "Account Size Sum"
-save_and_open_page
       tablecell(0,2).should have_content("46")
       tablecell(1,2).should have_content("123")
     end
