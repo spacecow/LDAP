@@ -48,9 +48,9 @@ describe Day do
 
       report = Factory(:report, date:"2011-11-01")
 
-      mstat = Factory(:monthstat,report_id:report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, account_id:test.id)
+      mstat = Factory(:monthstat,report_id:report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, tot_account_size:5, account_id:test.id)
       mstat.dailystats << Dailystat.first
-      mstat = Factory(:monthstat,report_id:report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, account_id:tester.id)
+      mstat = Factory(:monthstat,report_id:report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, tot_account_size:5, account_id:tester.id)
       mstat.dailystats << Dailystat.last
     end
 

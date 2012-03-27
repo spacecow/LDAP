@@ -47,6 +47,9 @@ describe "report" do
     it "the monthstat gets its avg account size set" do
       Monthstat.last.avg_account_size.to_digits.should eq "4.0" 
     end
+    it "the monthstat get its total account size set" do
+      Monthstat.last.tot_account_size.to_digits.should eq "4.0" 
+    end
 
 #    it "has a csv button" do
 #      page.should have_button('CSV')
@@ -72,7 +75,7 @@ describe "report" do
       Account.last.dailystats.should_not be_empty
       Account.last.dailystats.should eq [Dailystat.last]
 
-      @monthstat = Factory(:monthstat,report_id:@report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, account_id:account.id)
+      @monthstat = Factory(:monthstat,report_id:@report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, tot_account_size:5, account_id:account.id)
       @monthstat.dailystats << Dailystat.last
 
       day2 = Factory(:day,date:'2011-11-26')
@@ -109,6 +112,9 @@ describe "report" do
     end
     it "the monthstat gets its avg account size set" do
       Monthstat.last.avg_account_size.to_digits.should eq "4.5" 
+    end
+    it "the monthstat gets its tot account size increased" do
+      Monthstat.last.tot_account_size.to_digits.should eq "9.0" 
     end
   end
 end

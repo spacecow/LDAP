@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120228023419) do
+ActiveRecord::Schema.define(:version => 20120327061838) do
 
   create_table "accounts", :force => true do |t|
     t.string   "path"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20120228023419) do
     t.datetime "updated_at"
     t.string   "status"
     t.integer  "gid_num"
+    t.decimal  "tot_account_size",    :precision => 13, :scale => 2
   end
 
   create_table "reports", :force => true do |t|

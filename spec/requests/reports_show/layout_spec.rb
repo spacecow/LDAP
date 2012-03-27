@@ -47,7 +47,7 @@ describe "report" do
 
     it "has rows in the table" do
       visit report_path(@report2)
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","2011-11-25"]] 
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","12","2011-11-25"]] 
     end
   end #show: layout, with monthstats
 
@@ -64,11 +64,11 @@ describe "report" do
     end
 
     it "has a tableheader" do
-      tableheader('monthstats').should eq ["Userid","GID","GName","Path","Days","Avg. Account Size","Day of Registration"]
+      tableheader('monthstats').should eq ["Userid","GID","GName","Path","Days","Avg. Account Size","Tot. Account Size","Day of Registration"]
     end
 
     it "has rows in the table" do
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","2011-11-25"]] 
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","12","2011-11-25"]] 
     end
   end #show: layout, with monthstats
 
@@ -86,7 +86,7 @@ describe "report" do
     end
 
     it "has rows in the table" do
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","2011-11-25"],["tester","1004","tester","/home/tester","1","4","2011-11-26"]] 
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","12","2011-11-25"],["tester","1004","tester","/home/tester","1","4","4","2011-11-26"]] 
     end
 
     it "Userid ascending (default)" do
@@ -159,16 +159,28 @@ describe "report" do
       tablecell(1,5).should have_content("4")
     end
 
+    it "Tot. Account Size ascending" do
+      table('monthstats').click_link "Tot. Account Size"
+      tablecell(0,6).should have_content("4")
+      tablecell(1,6).should have_content("12")
+    end
+    it "Tot. Account Size descending" do
+      table('monthstats').click_link "Tot. Account Size"
+      table('monthstats').click_link "Tot. Account Size"
+      tablecell(0,6).should have_content("12")
+      tablecell(1,6).should have_content("4")
+    end
+
     it "Day of Registration ascending" do
       table('monthstats').click_link "Day of Registration"
-      tablecell(0,6).should have_content("2011-11-25")
-      tablecell(1,6).should have_content("2011-11-26")
+      tablecell(0,7).should have_content("2011-11-25")
+      tablecell(1,7).should have_content("2011-11-26")
     end
     it "Day of Registration descending" do
       table('monthstats').click_link "Day of Registration"
       table('monthstats').click_link "Day of Registration"
-      tablecell(0,6).should have_content("2011-11-26")
-      tablecell(1,6).should have_content("2011-11-25")
+      tablecell(0,7).should have_content("2011-11-26")
+      tablecell(1,7).should have_content("2011-11-25")
     end
   end
 end

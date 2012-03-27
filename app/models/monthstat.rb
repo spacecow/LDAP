@@ -8,11 +8,14 @@ class Monthstat < ActiveRecord::Base
 
   validates_presence_of :report, :account, :avg_account_size
 
-  attr_accessible :report_id, :account_id, :avg_account_size
+  attr_accessible :report_id, :account_id, :avg_account_size, :tot_account_size
 
   def increase_days; self.days+=1 end
   def recalculate_avg_account_size(account_size)
     self.avg_account_size = (self.avg_account_size*self.days + account_size)/(self.days+1)
+  end
+  def increase_tot_account_size(account_size)
+    self.tot_account_size += account_size 
   end
   def set_status; self.status = get_status end
 

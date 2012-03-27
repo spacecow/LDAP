@@ -11,11 +11,12 @@ class Dailystat < ActiveRecord::Base
 
   def create_or_update_monthstats(report)
     if !self.account.monthstats.map(&:report).include?(report)
-      monthstat = Monthstat.create!(report_id:report.id, account_id:self.account.id, day_of_registration:self.account.days.order(:date).first.date, avg_account_size:self.account_size)
+      monthstat = Monthstat.create!(report_id:report.id, account_id:self.account.id, day_of_registration:self.account.days.order(:date).first.date, avg_account_size:self.account_size,tot_account_size:self.account_size)
       monthstat.dailystats << self
     else
       self.account.monthstats.select{|e| e.report==report}.each do |monthstat|
         monthstat.recalculate_avg_account_size(self.account_size)
+        monthstat.increase_tot_account_size(self.account_size)
         monthstat.increase_days
         monthstat.set_status
         monthstat.save

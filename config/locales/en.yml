@@ -10,6 +10,7 @@ en:
   report:
     other: 'Reports'
   schema: "Schema"
+  tot_account_size: "Tot. Account Size"
   user: "User"
 
   alerts:
