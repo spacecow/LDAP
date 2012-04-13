@@ -49,8 +49,6 @@ GEM
       fssm (>= 0.2.7)
       sass (~> 3.1)
     database_cleaner (0.7.1)
-    delayed_job (3.0.1)
-      activesupport (~> 3.0)
     diff-lcs (1.1.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -159,7 +157,6 @@ DEPENDENCIES
   capybara
   compass
   database_cleaner
-  delayed_job
   escape_utils
   factory_girl_rails
   formtastic

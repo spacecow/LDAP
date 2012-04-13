@@ -1,1 +1,1 @@
-/home/staff/jsveholm/apps/basiq/spec/support/session.rb
+/home/jsveholm/apps/basiq/spec/support/session.rb
