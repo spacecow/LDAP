@@ -25,6 +25,10 @@ class Dailystat < ActiveRecord::Base
     end
   end
 
+  def lame_copy(day_id)
+    Dailystat.create(day_id:day_id,path:account.path,account_size:self.account_size)
+  end
+
   class << self
 
     def all_in_month(date)

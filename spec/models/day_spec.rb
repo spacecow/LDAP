@@ -1,6 +1,29 @@
 require 'spec_helper'
 
 describe Day do
+  describe "#lame_copy" do
+    before(:each) do
+      date = "2012-04-12"
+      day = Factory(:day,date:Date.parse(date),users_count:1,users_account_size_sum:4)
+      Factory(:account,path:"/home/tester")
+      Factory(:dailystat,day_id:day.id,path:"/home/tester")
+      Day.lame_copy(date,"2012-04-11")
+    end
+
+    it "a day with the new date is saved" do
+      Day.last.date.should eq Date.parse("2012-04-11") 
+    end
+    it "dailystats are copied" do
+      Dailystat.last.day_id.should eq Day.last.id
+    end
+    it "user count is copied" do
+      Day.last.users_count.should eq 1
+    end
+    it "user count is copied" do
+      Day.last.users_account_size_sum.should eq 4
+    end
+  end
+
   context "#generate_userlist from scratch" do
     it "generates a day with said date" do
       day = Day.generate_userlist(Date.today)

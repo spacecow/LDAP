@@ -1,6 +1,34 @@
 require 'spec_helper'
 
 describe Dailystat do
+  describe "#lame_copy" do
+    before(:each) do
+      date = "2012-04-12"
+      @day_to_copy = Factory(:day,date:Date.parse("2012-04-12"))
+      @account = Factory(:account,path:"/home/tester")
+      report = Factory(:report)
+      mstat = Factory(:monthstat,report_id:report.id,account_id:@account.id)
+      @stat = Factory(:dailystat,day_id:@day_to_copy.id,path:"/home/tester",monthstat_id:mstat.id)
+      @stat.account_size = 13
+
+      @day = Factory(:day,date:Date.parse("2012-04-11"))
+      @stat.lame_copy(@day.id)
+    end
+
+    it "stat copy points at the new day" do
+      Dailystat.last.day_id.should eq @day.id
+    end
+    it "stat copy has the same account" do
+      Dailystat.last.account_id.should eq @account.id
+    end
+    it "stat copy has the same account size" do
+      Dailystat.last.account_size.should eq @stat.account_size
+    end
+    it "stat copy has no mstat set" do
+      Dailystat.last.monthstat_id.should be_nil
+    end
+  end
+
   describe "#calculate_account_size" do
     before(:each) do
       day = Factory(:day)

@@ -6,8 +6,10 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
     stats = Dailystat.all_in_month(@report.date).where("monthstat_id is NULL")
 
-    stats.each do |stat|
-      stat.create_or_update_monthstats(@report)
+    until stats.empty?
+      stats.shift(1000).each do |stat|
+        stat.create_or_update_monthstats(@report)
+      end
     end
 
     @monthstats = @report.monthstats.order(sort_column+" "+sort_direction)
@@ -19,11 +21,11 @@ class ReportsController < ApplicationController
         sheet = book.create_worksheet :name => "LDAP"
         dead = Spreadsheet::Format.new :color => :red
         empty = Spreadsheet::Format.new :color => :orange 
-        sheet.row(0).concat ["Userid","GID","Path","Days","Avg. Account Size", "Day of Registration"]
+        sheet.row(0).concat ["Userid","GID","GIDName","Path","Days","Avg. Account Size","Tot. Account Size","Day of Registration"]
         @monthstats.each_with_index do |mstat,i|
           sheet.row(1+i).default_format = empty if mstat.status == 'empty' 
           sheet.row(1+i).default_format = dead if mstat.status == 'dead'
-          sheet.row(1+i).concat [mstat.userid,mstat.gid,mstat.path,mstat.days,mstat.avg_account_size.to_digits.to_i,mstat.day_of_registration]
+          sheet.row(1+i).concat [mstat.userid,mstat.gid_num,mstat.gid_string,mstat.path,mstat.days,mstat.avg_account_size.to_digits.to_i,mstat.tot_account_size.to_digits.to_i,mstat.day_of_registration]
         end
 
         file = "private/reports/#{Date.today.strftime('%Y-%m-%d')}-report-#{@report.date.strftime('%Y-%m')}.xls" 

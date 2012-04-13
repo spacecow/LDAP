@@ -27,6 +27,10 @@ class Monthstat < ActiveRecord::Base
     def update_statuses
       Monthstat.all.map(&:update_status)
     end
+
+    def update_tot_account_size
+      Monthstat.all.map(&:update_tot_account_size)
+    end
   end
 
   def update_gid
@@ -40,6 +44,10 @@ class Monthstat < ActiveRecord::Base
     if (Time.now - updated_at) > 1.day 
       update_attribute(:status,get_status)
     end
+  end
+
+  def update_tot_account_size
+    update_attribute(:tot_account_size,days*avg_account_size)
   end
 
   private

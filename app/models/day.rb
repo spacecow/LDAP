@@ -4,6 +4,13 @@ class Day < ActiveRecord::Base
   has_many :accounts, :through => :dailystats
 
   def dateformat; date.strftime("%Y年%m月%d日") end
+  def delay_add_user(user); self.users << user end
+  def lame_copy(date)
+    day = Day.create(date:date,users_count:self.users_count,users_account_size_sum:self.users_account_size_sum)
+    self.dailystats.each do |stat|
+      stat.lame_copy(day.id)
+    end
+  end
 
   class << self
 
@@ -41,9 +48,17 @@ class Day < ActiveRecord::Base
     def generate_todays_userlist;
       generate_userlist(Date.today)
     end
+
+    def lame_copy(date_to_copy,date)
+      Day.where(date:Date.parse(date_to_copy)).first.lame_copy(date)
+    end
+    def fixed_lame_copy
+      date_to_copy = "2012-04-12"
+      date = "2012-04-11"
+      Day.where(date:Date.parse(date_to_copy)).first.lame_copy(date)
+    end
   end
 
-  def delay_add_user(user); self.users << user end
 
   private
 
