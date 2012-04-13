@@ -5,6 +5,7 @@ log/*.sql
 tmp/
 config/database.yml
 config/login.yml
+config/deploy*
 *.swp
 *.swo
 data/userlist.txt
