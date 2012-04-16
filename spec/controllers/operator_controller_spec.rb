@@ -21,7 +21,7 @@ describe OperatorController do
 
   describe "a user is logged in" do
     before(:each) do
-      user = Factory(:user)
+      user = FactoryGirl.create(:user)
       session[:userid] = user.id 
     end
 

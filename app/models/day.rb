@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class Day < ActiveRecord::Base
-  has_many :dailystats, :dependent => :destroy, :after_add => [:inc_users_count, :inc_account_size], :after_remove => [:dec_users_count, :dec_account_size] 
+  has_many :dailystats, :dependent => :destroy, :after_add => :inc_users_count, :after_remove => :dec_users_count
   has_many :accounts, :through => :dailystats
 
   def dateformat; date.strftime("%Y年%m月%d日") end

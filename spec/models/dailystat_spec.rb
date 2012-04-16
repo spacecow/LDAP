@@ -4,14 +4,14 @@ describe Dailystat do
   describe "#lame_copy" do
     before(:each) do
       date = "2012-04-12"
-      @day_to_copy = Factory(:day,date:Date.parse("2012-04-12"))
-      @account = Factory(:account,path:"/home/tester")
-      report = Factory(:report)
-      mstat = Factory(:monthstat,report_id:report.id,account_id:@account.id)
-      @stat = Factory(:dailystat,day_id:@day_to_copy.id,path:"/home/tester",monthstat_id:mstat.id)
+      @day_to_copy = FactoryGirl.create(:day,date:Date.parse("2012-04-12"))
+      @account = FactoryGirl.create(:account,path:"/home/tester")
+      report = FactoryGirl.create(:report)
+      mstat = FactoryGirl.create(:monthstat,report_id:report.id,account_id:@account.id)
+      @stat = FactoryGirl.create(:dailystat,day_id:@day_to_copy.id,path:"/home/tester",monthstat_id:mstat.id)
       @stat.account_size = 13
 
-      @day = Factory(:day,date:Date.parse("2012-04-11"))
+      @day = FactoryGirl.create(:day,date:Date.parse("2012-04-11"))
       @stat.lame_copy(@day.id)
     end
 
@@ -31,15 +31,15 @@ describe Dailystat do
 
   describe "#calculate_account_size" do
     before(:each) do
-      day = Factory(:day)
-      account = Factory(:account, path:'/home/test')
+      day = FactoryGirl.create(:day)
+      account = FactoryGirl.create(:account, path:'/home/test')
       #day.accounts << account
       #@stat = Dailystat.last
       @stat = Dailystat.create(path:"/home/test")
     end
 
     it "calculates the account size" do
-      @stat.account_size.should be(12)
+      @stat.account_size.should be(0)
     end
 
     it "creates an account" do

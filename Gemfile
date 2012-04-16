@@ -4,11 +4,10 @@ gem 'rails', '3.0.10'
 gem 'mysql2', '0.2.6'
 gem 'annotate'
 gem 'compass'
-gem 'whenever', :require => false
 gem 'formtastic'
 gem "escape_utils"
 gem 'spreadsheet'
-
+gem 'whenever', require:false
 
 group :development do
   gem "rspec-rails"

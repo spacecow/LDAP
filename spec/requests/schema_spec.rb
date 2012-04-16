@@ -10,17 +10,17 @@ describe "schema" do
   end
 
   it "gives info about date, users, space" do
-    account = Factory(:account, path:'/home/test')
-    day = Factory(:day, :date => "2011-11-25")
+    account = FactoryGirl.create(:account, path:'/home/test')
+    day = FactoryGirl.create(:day, :date => "2011-11-25")
     day.dailystats << create_stat("/home/test",12)
     login
     visit schema_path
-    tablerow(0).should eq ["2011年11月25日", "1", "12", "Del"]
+    tablerow(0).should eq ["2011年11月25日", "1", "Del"]
   end
 
   context "link to" do
     it "day" do
-      day = Factory(:day, :date => "2011-11-25")
+      day = FactoryGirl.create(:day, :date => "2011-11-25")
       login
       visit schema_path
       click_link("2011年11月25日")
@@ -28,8 +28,8 @@ describe "schema" do
     end
 
     it "delete day" do
-      day = Factory(:day)
-      account = Factory(:account, path:'/home/test')
+      day = FactoryGirl.create(:day)
+      account = FactoryGirl.create(:account, path:'/home/test')
       #day.dailystats << Factory(:dailystat,:account_id=>account.id) 
       day.dailystats << create_stat("/home/test") 
       login
@@ -77,16 +77,16 @@ describe "schema" do
       tablecell(1,1).should have_content("1")
     end
 
-    it "Account Size ascending" do
-      click_link "Account Size Sum"
-      tablecell(0,2).should have_content("46")
-      tablecell(1,2).should have_content("123")
-    end
-    it "Account size descending" do
-      click_link "Account Size Sum"
-      click_link "Account Size Sum"
-      tablecell(0,2).should have_content("123")
-      tablecell(1,2).should have_content("46")
-    end
+    #it "Account Size ascending" do
+    #  click_link "Account Size Sum"
+    #  tablecell(0,2).should have_content("46")
+    #  tablecell(1,2).should have_content("123")
+    #end
+    #it "Account size descending" do
+    #  click_link "Account Size Sum"
+    #  click_link "Account Size Sum"
+    #  tablecell(0,2).should have_content("123")
+    #  tablecell(1,2).should have_content("46")
+    #end
   end
 end

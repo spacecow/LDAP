@@ -3,14 +3,14 @@ require 'spec_helper'
 describe "report" do
   before(:each) do
     login 
-    @report = Factory(:report,date:Date.parse('2011-11-01'))
+    @report = FactoryGirl.create(:report,date:Date.parse('2011-11-01'))
   end
 
   context "layout, with non-existing monthstat" do
 
     before(:each) do
-      day = Factory(:day,date:'2011-11-25')
-      account = Factory(:account, path:'/home/tester')
+      day = FactoryGirl.create(:day,date:'2011-11-25')
+      account = FactoryGirl.create(:account, path:'/home/tester')
       day.dailystats << Dailystat.create(path:'/home/tester')
 
       Dailystat.last.monthstat.should be_nil
@@ -45,10 +45,10 @@ describe "report" do
       Monthstat.last.day_of_registration.should eq Date.parse('2011-11-25') 
     end
     it "the monthstat gets its avg account size set" do
-      Monthstat.last.avg_account_size.to_digits.should eq "4.0" 
+      Monthstat.last.avg_account_size.should be_nil
     end
     it "the monthstat get its total account size set" do
-      Monthstat.last.tot_account_size.to_digits.should eq "4.0" 
+      Monthstat.last.tot_account_size.should be_nil
     end
 
 #    it "has a csv button" do
@@ -62,8 +62,8 @@ describe "report" do
 
   context "layout, with existing monthstat" do
     before(:each) do
-      day = Factory(:day,date:'2011-11-25')
-      account = Factory(:account, path:'/home/tester')
+      day = FactoryGirl.create(:day,date:'2011-11-25')
+      account = FactoryGirl.create(:account, path:'/home/tester')
       day.dailystats << Dailystat.create(path:'/home/tester')
 
       Day.last.accounts.should_not be_empty
@@ -75,10 +75,10 @@ describe "report" do
       Account.last.dailystats.should_not be_empty
       Account.last.dailystats.should eq [Dailystat.last]
 
-      @monthstat = Factory(:monthstat,report_id:@report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, tot_account_size:5, account_id:account.id)
+      @monthstat = FactoryGirl.create(:monthstat,report_id:@report.id, day_of_registration:Date.parse('2011-11-25'), account_id:account.id)
       @monthstat.dailystats << Dailystat.last
 
-      day2 = Factory(:day,date:'2011-11-26')
+      day2 = FactoryGirl.create(:day,date:'2011-11-26')
       day2.dailystats << Dailystat.create(path:'/home/tester')
   
       visit report_path(@report)
@@ -111,10 +111,10 @@ describe "report" do
       Monthstat.last.day_of_registration.should eq Date.parse('2011-11-25') 
     end
     it "the monthstat gets its avg account size set" do
-      Monthstat.last.avg_account_size.to_digits.should eq "4.5" 
+      Monthstat.last.avg_account_size.should be_nil
     end
     it "the monthstat gets its tot account size increased" do
-      Monthstat.last.tot_account_size.to_digits.should eq "9.0" 
+      Monthstat.last.tot_account_size.should be_nil 
     end
   end
 end

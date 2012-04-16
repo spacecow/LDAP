@@ -3,14 +3,14 @@ require 'spec_helper'
 describe "Days" do
   context "links to" do
     it "schedule" do
-      visit day_path Factory(:day)
+      visit day_path FactoryGirl.create(:day)
       click_link "Schema"
     end
   end
 
   context "sort for" do
     before(:each) do
-      day = Factory(:day)
+      day = FactoryGirl.create(:day)
       day.dailystats << create_stat("/home/testar",3)
       day.dailystats << create_stat("/home/tester",43)
       day.dailystats << create_stat("/home/test",123)

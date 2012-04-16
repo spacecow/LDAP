@@ -6,17 +6,11 @@ class Monthstat < ActiveRecord::Base
   has_many :dailystats
   belongs_to :account
 
-  validates_presence_of :report, :account, :avg_account_size
+  validates_presence_of :report, :account
 
-  attr_accessible :report_id, :account_id, :avg_account_size, :tot_account_size
+  attr_accessible :report_id, :account_id
 
   def increase_days; self.days+=1 end
-  def recalculate_avg_account_size(account_size)
-    self.avg_account_size = (self.avg_account_size*self.days + account_size)/(self.days+1)
-  end
-  def increase_tot_account_size(account_size)
-    self.tot_account_size += account_size 
-  end
   def set_status; self.status = get_status end
 
   class << self
@@ -26,10 +20,6 @@ class Monthstat < ActiveRecord::Base
 
     def update_statuses
       Monthstat.all.map(&:update_status)
-    end
-
-    def update_tot_account_size
-      Monthstat.all.map(&:update_tot_account_size)
     end
   end
 
@@ -44,10 +34,6 @@ class Monthstat < ActiveRecord::Base
     if (Time.now - updated_at) > 1.day 
       update_attribute(:status,get_status)
     end
-  end
-
-  def update_tot_account_size
-    update_attribute(:tot_account_size,days*avg_account_size)
   end
 
   private

@@ -12,7 +12,6 @@ FactoryGirl.define do
 
   factory :monthstat do
     path "/home/factory"
-    avg_account_size 4
   end
 
   factory :report do

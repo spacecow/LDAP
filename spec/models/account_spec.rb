@@ -5,7 +5,7 @@ describe Account do
     #user = User.create(:path => "/home/test")
     #user.calculate_account_size
     stat = create_stat("/home/test")
-    stat.account_size.should eq 12
+    stat.account_size.should eq 0 
   end
 
   it "cannot calculate the size of an account that does not exist" do
@@ -15,18 +15,18 @@ describe Account do
 
   context "on creation" do
     it "gid is set for existing account" do
-      Factory(:account,path:"/home/test")
+      FactoryGirl.create(:account,path:"/home/test")
       Account.last.gid.should eq '1002(test)' 
     end
     it "not set for non-existing accounts" do
-      Factory(:account,path:"/home/foweifj")
+      FactoryGirl.create(:account,path:"/home/foweifj")
       Account.last.gid.should be_nil
     end
   end
 
   context "#update_gids" do
     it "on existing accounts without gid" do
-      account = Factory(:account,path:"/home/test")
+      account = FactoryGirl.create(:account,path:"/home/test")
       account.update_attribute(:gid,"wrong")
       Account.last.gid.should eq 'wrong' 
       Account.update_gids

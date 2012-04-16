@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "report" do
   before(:each) do
     login 
-    @report = Factory(:report,date:Date.parse('2011-11-01'))
+    @report = FactoryGirl.create(:report,date:Date.parse('2011-11-01'))
   end
 
   context "show: layout, without monthstats" do
@@ -22,15 +22,15 @@ describe "report" do
 
   context "show: layout, with monthstats in different reports" do
     before(:each) do
-      day = Factory(:day, date:'2011-11-25')
-      account = Factory(:account, path:'/home/test')
+      day = FactoryGirl.create(:day, date:'2011-11-25')
+      account = FactoryGirl.create(:account, path:'/home/test')
       stat = Dailystat.create(path:'/home/test')
       day.dailystats << stat
-      mstat = Factory(:monthstat,report_id:@report.id,account_id:account.id,avg_account_size:12)
+      mstat = FactoryGirl.create(:monthstat,report_id:@report.id,account_id:account.id,avg_account_size:12)
       mstat.dailystats << Dailystat.last 
 
-      @report2 = Factory(:report,date:Date.parse('2011-12-01'))
-      day2 = Factory(:day, date:'2011-12-20')
+      @report2 = FactoryGirl.create(:report,date:Date.parse('2011-12-01'))
+      day2 = FactoryGirl.create(:day, date:'2011-12-20')
       day2.dailystats << Dailystat.create(path:'/home/test')
     end
 
@@ -47,14 +47,14 @@ describe "report" do
 
     it "has rows in the table" do
       visit report_path(@report2)
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","12","2011-11-25"]] 
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","2011-11-25"]] 
     end
   end #show: layout, with monthstats
 
   context "show: layout, with monthstats not reported" do
     before(:each) do
-      day = Factory(:day, date:'2011-11-25')
-      account = Factory(:account, path:'/home/test')
+      day = FactoryGirl.create(:day, date:'2011-11-25')
+      account = FactoryGirl.create(:account, path:'/home/test')
       day.dailystats << Dailystat.create(path:'/home/test')
       visit report_path(@report)
     end
@@ -68,25 +68,25 @@ describe "report" do
     end
 
     it "has rows in the table" do
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","12","2011-11-25"]] 
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","2011-11-25"]] 
     end
   end #show: layout, with monthstats
 
   context "show: layout, sort on columns" do
     before(:each) do
-      day = Factory(:day, date:'2011-11-25')
-      account = Factory(:account, path:'/home/test')
+      day = FactoryGirl.create(:day, date:'2011-11-25')
+      account = FactoryGirl.create(:account, path:'/home/test')
       #day.accounts << account
       day.dailystats << Dailystat.create(path:'/home/test')
-      day = Factory(:day, date:'2011-11-26')
-      account = Factory(:account, path:'/home/tester')
+      day = FactoryGirl.create(:day, date:'2011-11-26')
+      account = FactoryGirl.create(:account, path:'/home/tester')
       #day.accounts << account
       day.dailystats << Dailystat.create(path:'/home/tester')
       visit report_path(@report)
     end
 
     it "has rows in the table" do
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","12","12","2011-11-25"],["tester","1004","tester","/home/tester","1","4","4","2011-11-26"]] 
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","2011-11-25"],["tester","1004","tester","/home/tester","1","2011-11-26"]] 
     end
 
     it "Userid ascending (default)" do
@@ -147,40 +147,40 @@ describe "report" do
       tablecell(1,4).should have_content("1")
     end
 
-    it "Avg. Account Size ascending" do
-      table('monthstats').click_link "Avg. Account Size"
-      tablecell(0,5).should have_content("4")
-      tablecell(1,5).should have_content("12")
-    end
-    it "Avg. Account Size descending" do
-      table('monthstats').click_link "Avg. Account Size"
-      table('monthstats').click_link "Avg. Account Size"
-      tablecell(0,5).should have_content("12")
-      tablecell(1,5).should have_content("4")
-    end
+    #it "Avg. Account Size ascending" do
+    #  table('monthstats').click_link "Avg. Account Size"
+    #  tablecell(0,5).should have_content("4")
+    #  tablecell(1,5).should have_content("12")
+    #end
+    #it "Avg. Account Size descending" do
+    #  table('monthstats').click_link "Avg. Account Size"
+    #  table('monthstats').click_link "Avg. Account Size"
+    #  tablecell(0,5).should have_content("12")
+    #  tablecell(1,5).should have_content("4")
+    #end
 
-    it "Tot. Account Size ascending" do
-      table('monthstats').click_link "Tot. Account Size"
-      tablecell(0,6).should have_content("4")
-      tablecell(1,6).should have_content("12")
-    end
-    it "Tot. Account Size descending" do
-      table('monthstats').click_link "Tot. Account Size"
-      table('monthstats').click_link "Tot. Account Size"
-      tablecell(0,6).should have_content("12")
-      tablecell(1,6).should have_content("4")
-    end
+    #it "Tot. Account Size ascending" do
+    #  table('monthstats').click_link "Tot. Account Size"
+    #  tablecell(0,6).should have_content("4")
+    #  tablecell(1,6).should have_content("12")
+    #end
+    #it "Tot. Account Size descending" do
+    #  table('monthstats').click_link "Tot. Account Size"
+    #  table('monthstats').click_link "Tot. Account Size"
+    #  tablecell(0,6).should have_content("12")
+    #  tablecell(1,6).should have_content("4")
+    #end
 
     it "Day of Registration ascending" do
       table('monthstats').click_link "Day of Registration"
-      tablecell(0,7).should have_content("2011-11-25")
-      tablecell(1,7).should have_content("2011-11-26")
+      tablecell(0,5).should have_content("2011-11-25")
+      tablecell(1,5).should have_content("2011-11-26")
     end
     it "Day of Registration descending" do
       table('monthstats').click_link "Day of Registration"
       table('monthstats').click_link "Day of Registration"
-      tablecell(0,7).should have_content("2011-11-26")
-      tablecell(1,7).should have_content("2011-11-25")
+      tablecell(0,5).should have_content("2011-11-26")
+      tablecell(1,5).should have_content("2011-11-25")
     end
   end
 end

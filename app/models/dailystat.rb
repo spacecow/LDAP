@@ -4,19 +4,17 @@ class Dailystat < ActiveRecord::Base
   belongs_to :monthstat
 
   attr_accessor :path
-  before_create :calculate_account_size
+  before_create :set_account
 
   def account_gid; account.gid end
   def account_path; account.path end
 
   def create_or_update_monthstats(report)
     if !self.account.monthstats.map(&:report).include?(report)
-      monthstat = Monthstat.create!(report_id:report.id, account_id:self.account.id, day_of_registration:self.account.days.order(:date).first.date, avg_account_size:self.account_size,tot_account_size:self.account_size)
+      monthstat = Monthstat.create!(report_id:report.id, account_id:self.account.id, day_of_registration:self.account.days.order(:date).first.date)
       monthstat.dailystats << self
     else
       self.account.monthstats.select{|e| e.report==report}.each do |monthstat|
-        monthstat.recalculate_avg_account_size(self.account_size)
-        monthstat.increase_tot_account_size(self.account_size)
         monthstat.increase_days
         monthstat.set_status
         monthstat.save
@@ -39,13 +37,13 @@ class Dailystat < ActiveRecord::Base
 
   private
 
-    def calculate_account_size
-      if account_size == 0 #for rspec
-        self.account_size = %x[du -s #{@path}].split[0] || 0 
-        if %w(development test).include?(Rails.env)
-          self.account_size = "-" if !$?.success?
-        end
-      end
+    def set_account 
+      #if account_size == 0 #for rspec
+      #  self.account_size = %x[du -s #{@path}].split[0] || 0 
+      #  if %w(development test).include?(Rails.env)
+      #    self.account_size = "-" if !$?.success?
+      #  end
+      #end
       if account_id.nil?
         account = Account.find_or_create_by_path(@path)
         self.account_id = account.id

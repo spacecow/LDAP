@@ -4,9 +4,9 @@ describe Day do
   describe "#lame_copy" do
     before(:each) do
       date = "2012-04-12"
-      day = Factory(:day,date:Date.parse(date),users_count:1,users_account_size_sum:4)
-      Factory(:account,path:"/home/tester")
-      Factory(:dailystat,day_id:day.id,path:"/home/tester")
+      day = FactoryGirl.create(:day,date:Date.parse(date),users_count:1,users_account_size_sum:4)
+      FactoryGirl.create(:account,path:"/home/tester")
+      FactoryGirl.create(:dailystat,day_id:day.id,path:"/home/tester")
       Day.lame_copy(date,"2012-04-11")
     end
 
@@ -42,7 +42,7 @@ describe Day do
 
     it "calculates the total user account size" do
       day = Day.generate_todays_userlist
-      day.users_account_size_sum.should eq 16
+      day.users_account_size_sum.should eq(0) 
     end
 
     it "generates a report if there is none" do
@@ -63,17 +63,17 @@ describe Day do
 
   context "generate_userlist with existing report and mstat" do
     before(:each) do
-      day = Factory(:day,date:'2011-11-25')
-      test = Factory(:account, path:'/home/test')
-      tester = Factory(:account, path:'/home/tester')
+      day = FactoryGirl.create(:day,date:'2011-11-25')
+      test = FactoryGirl.create(:account, path:'/home/test')
+      tester = FactoryGirl.create(:account, path:'/home/tester')
       day.dailystats << Dailystat.create(path:'/home/test')
       day.dailystats << Dailystat.create(path:'/home/tester')
 
-      report = Factory(:report, date:"2011-11-01")
+      report = FactoryGirl.create(:report, date:"2011-11-01")
 
-      mstat = Factory(:monthstat,report_id:report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, tot_account_size:5, account_id:test.id)
+      mstat = FactoryGirl.create(:monthstat,report_id:report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, tot_account_size:5, account_id:test.id)
       mstat.dailystats << Dailystat.first
-      mstat = Factory(:monthstat,report_id:report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, tot_account_size:5, account_id:tester.id)
+      mstat = FactoryGirl.create(:monthstat,report_id:report.id, day_of_registration:Date.parse('2011-11-25'), avg_account_size:5, tot_account_size:5, account_id:tester.id)
       mstat.dailystats << Dailystat.last
     end
 
