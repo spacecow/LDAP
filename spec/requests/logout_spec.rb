@@ -1,1 +1,0 @@
-/home/jsveholm/apps/basiq/spec/request/logout_spec.rb

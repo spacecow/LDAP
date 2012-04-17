@@ -16,7 +16,7 @@ class Dailystat < ActiveRecord::Base
     else
       self.account.monthstats.select{|e| e.report==report}.each do |monthstat|
         monthstat.increase_days
-        monthstat.set_status
+        #monthstat.set_status
         monthstat.save
         self.update_attribute(:monthstat_id,monthstat.id) 
       end

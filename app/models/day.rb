@@ -19,7 +19,8 @@ class Day < ActiveRecord::Base
       path = "data/userlist_test.txt"
       if Rails.env.production?
         path = "data/userlist.txt"
-        %x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -h 172.16.100.79 "(objectclass=*)" gecos homeDirectory > data/userlist.txt]
+        %x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -x "(objectclass=*)" gecos homeDirectory > data/userlist.txt]
+        #%x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -h 172.16.100.79 "(objectclass=*)" gecos homeDirectory > data/userlist.txt]
         #%x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -h altair "(objectclass=*)" gecos homeDirectory > data/userlist.txt]
       end
       File.open(path).each do |line|

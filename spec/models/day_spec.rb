@@ -55,9 +55,9 @@ describe Day do
       }.should change(Monthstat, :count).by(2)
     end
 
-    it "sets the status of the monthstat" do
+    it "does not set status of the monthstat" do
       Day.generate_todays_userlist
-      Monthstat.last.status.should_not be_nil
+      Monthstat.last.status.should be_nil
     end
   end #generate_userlist from scratch
 
@@ -87,11 +87,11 @@ describe Day do
       }.should change(Monthstat,:count).by(0)
     end
 
-    it "updates the status of the monthstat" do
-      Monthstat.last.update_attribute(:status,"wrong")
-      Day.generate_userlist(Date.parse("2011-11-26"))
-      Monthstat.last.status.should be_blank
-    end
+    #it "updates the status of the monthstat" do
+    #  Monthstat.last.update_attribute(:status,"wrong")
+    #  Day.generate_userlist(Date.parse("2011-11-26"))
+    #  Monthstat.last.status.should be_nil
+    #end
   end
 end
 

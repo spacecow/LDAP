@@ -13,5 +13,5 @@ LDAP::Application.routes.draw do
   resources :days
   resources :accounts
 
-  root :to => "sessions#new"
+  root :to => "operator#schema"
 end

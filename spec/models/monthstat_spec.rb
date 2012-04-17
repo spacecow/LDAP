@@ -15,19 +15,19 @@ describe Monthstat do
       it "blank if user and dir exists" do
         account = FactoryGirl.create(:account, path:'/home/test')
         mstat = FactoryGirl.create(:monthstat,report_id:@report.id,account_id:account.id)
-        Monthstat.last.status.should_not be_nil
+        Monthstat.last.status.should be_nil
       end
 
       it "empty if user exists but dir does not" do
         account = FactoryGirl.create(:account, path:'/home/empty')
         mstat = FactoryGirl.create(:monthstat,report_id:@report.id,account_id:account.id)
-        Monthstat.last.status.should eq 'empty' 
+        Monthstat.last.status.should be_nil
       end
 
       it "dead if user does not exist" do
         account = FactoryGirl.create(:account, path:'/home/ghost')
         mstat = FactoryGirl.create(:monthstat,report_id:@report.id,account_id:account.id)
-        Monthstat.last.status.should eq 'dead' 
+        Monthstat.last.status.should be_nil 
       end
     end
   end

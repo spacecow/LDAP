@@ -1,7 +1,7 @@
 class Monthstat < ActiveRecord::Base
   belongs_to :report
 
-  before_create :set_path,:set_gid,:set_userid,:set_days,:set_day_of_registration, :set_status
+  before_create :set_path,:set_gid,:set_userid,:set_days,:set_day_of_registration
 
   has_many :dailystats
   belongs_to :account
@@ -11,7 +11,7 @@ class Monthstat < ActiveRecord::Base
   attr_accessible :report_id, :account_id
 
   def increase_days; self.days+=1 end
-  def set_status; self.status = get_status end
+  #def set_status; self.status = get_status end
 
   class << self
     def update_gids
