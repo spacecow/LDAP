@@ -5,6 +5,7 @@ class Dailystat < ActiveRecord::Base
 
   attr_accessor :path
   before_create :set_account
+  before_create :set_gid
 
   def account_gid; account.gid end
   def account_path; account.path end
@@ -48,6 +49,13 @@ class Dailystat < ActiveRecord::Base
         account = Account.find_or_create_by_path(@path)
         self.account_id = account.id
       end 
+    end
+
+    def set_gid
+      data = %x[id #{path.split('/').last}].match(/gid=(.+?)\((.+?)\)/)
+      self.gid_num = data[1] if data
+      self.gid_string = data[2] if data
+    #  #update_attribute(:gid,data[1]) if data
     end
 
 end

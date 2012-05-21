@@ -4,12 +4,14 @@
 <table>
   <tr>
     <th></th>
-    <th><%= sortable 'account_size' %></th>
+    <th><%= sortable 'gid_num', 'GID' %></th>
+    <th><%= sortable 'gid_string', 'GIDName' %></th>
   </tr>
 <% @stats.each do |stat| %>
   <tr>
     <td><%= stat.account_path %></td>
-    <td><%= stat.account_size %></td>
+    <td><%= stat.gid_num %></td>
+    <td><%= stat.gid_string %></td>
   </tr>
 <% end %>
 </table>

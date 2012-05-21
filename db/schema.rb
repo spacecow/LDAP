@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120327061838) do
+ActiveRecord::Schema.define(:version => 20120417091706) do
 
   create_table "accounts", :force => true do |t|
     t.string   "path"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20120327061838) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "monthstat_id"
+    t.integer  "gid_num"
+    t.string   "gid_string"
   end
 
   create_table "days", :force => true do |t|

@@ -14,7 +14,7 @@ class DaysController < ApplicationController
   private
 
     def sort_column
-      Account.column_names.include?(params[:sort]) ? params[:sort] : 'account_size'
+      Dailystat.column_names.include?(params[:sort]) ? params[:sort] : 'gid_num'
     end
     def sort_direction
       %w(asc desc).include?(params[:direction]) ? params[:direction] : 'asc'
