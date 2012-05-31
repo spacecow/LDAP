@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Account, focus:true do
+describe Account do
   context "copy gid to dailystat" do
     it "with dailystats" do
       account = FactoryGirl.create(:account,path:"/home/test")
-      stat = FactoryGirl.create(:dailystat,account_id:account.id,path:"/home/test")
+      stat = FactoryGirl.create(:dailystat,account_id:account.id,path:"/home/test",gid_num:1002,gid_string:'test')
       account.copy_gid_to_dailystats
       Dailystat.last.gid_num.should eq 1002
       Dailystat.last.gid_string.should eq "test"
@@ -13,7 +13,7 @@ describe Account, focus:true do
     it "with dailystats and account gid is nil" do
       account = FactoryGirl.create(:account,path:"/home/test")
       account.gid = nil
-      stat = FactoryGirl.create(:dailystat,account_id:account.id,path:"/home/test")
+      stat = FactoryGirl.create(:dailystat,account_id:account.id,path:"/home/test",gid_num:1002,gid_string:'test')
       account.copy_gid_to_dailystats
       Dailystat.last.gid_num.should be(1002)  
       Dailystat.last.gid_string.should eq 'test' 

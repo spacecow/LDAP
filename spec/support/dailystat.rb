@@ -1,3 +1,3 @@
-def create_stat(path,size=0)
-  Dailystat.create(:path => path)
+def create_stat(path,gid_num=1,gid_string='ghost')
+  Dailystat.create(path:path,gid_num:gid_num,gid_string:gid_string)
 end

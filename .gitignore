@@ -10,5 +10,6 @@ config/deploy*
 *.swo
 data/userlist.txt
 data/userlist_test.txt
+data/temp.txt
 config/initializers/extensions/element.rb
 private/reports

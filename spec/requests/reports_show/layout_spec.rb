@@ -24,14 +24,14 @@ describe "report" do
     before(:each) do
       day = FactoryGirl.create(:day, date:'2011-11-25')
       account = FactoryGirl.create(:account, path:'/home/test')
-      stat = Dailystat.create(path:'/home/test')
+      stat = create_stat('/home/test')
       day.dailystats << stat
       mstat = FactoryGirl.create(:monthstat,report_id:@report.id,account_id:account.id,avg_account_size:12)
       mstat.dailystats << Dailystat.last 
 
       @report2 = FactoryGirl.create(:report,date:Date.parse('2011-12-01'))
       day2 = FactoryGirl.create(:day, date:'2011-12-20')
-      day2.dailystats << Dailystat.create(path:'/home/test')
+      day2.dailystats << create_stat('/home/test',1002,'test')
     end
 
     it "has a title" do
@@ -55,7 +55,7 @@ describe "report" do
     before(:each) do
       day = FactoryGirl.create(:day, date:'2011-11-25')
       account = FactoryGirl.create(:account, path:'/home/test')
-      day.dailystats << Dailystat.create(path:'/home/test')
+      day.dailystats << create_stat('/home/test',1002,'test')
       visit report_path(@report)
     end
 
@@ -77,11 +77,11 @@ describe "report" do
       day = FactoryGirl.create(:day, date:'2011-11-25')
       account = FactoryGirl.create(:account, path:'/home/test')
       #day.accounts << account
-      day.dailystats << Dailystat.create(path:'/home/test')
+      day.dailystats << create_stat('/home/test',1002,'test')
       day = FactoryGirl.create(:day, date:'2011-11-26')
       account = FactoryGirl.create(:account, path:'/home/tester')
       #day.accounts << account
-      day.dailystats << Dailystat.create(path:'/home/tester')
+      day.dailystats << create_stat('/home/tester',1004,'tester')
       visit report_path(@report)
     end
 

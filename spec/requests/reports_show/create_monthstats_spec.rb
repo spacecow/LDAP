@@ -11,7 +11,7 @@ describe "report" do
     before(:each) do
       day = FactoryGirl.create(:day,date:'2011-11-25')
       account = FactoryGirl.create(:account, path:'/home/tester')
-      day.dailystats << Dailystat.create(path:'/home/tester')
+      day.dailystats << create_stat('/home/tester',1004,'tester')
 
       Dailystat.last.monthstat.should be_nil
       visit report_path(@report)
@@ -64,7 +64,7 @@ describe "report" do
     before(:each) do
       day = FactoryGirl.create(:day,date:'2011-11-25')
       account = FactoryGirl.create(:account, path:'/home/tester')
-      day.dailystats << Dailystat.create(path:'/home/tester')
+      day.dailystats << create_stat('/home/tester',1004)
 
       Day.last.accounts.should_not be_empty
       Day.last.accounts.should eq [Account.last]
@@ -79,7 +79,7 @@ describe "report" do
       @monthstat.dailystats << Dailystat.last
 
       day2 = FactoryGirl.create(:day,date:'2011-11-26')
-      day2.dailystats << Dailystat.create(path:'/home/tester')
+      day2.dailystats << create_stat('/home/tester',1004,'tester')
   
       visit report_path(@report)
     end 
@@ -99,6 +99,7 @@ describe "report" do
       Monthstat.last.userid.should eq 'tester'
     end
     it "the monthstat has its gid set" do
+      p Monthstat.last
       Monthstat.last.gid_num.should eq 1004
     end
     it "the monthstat has its gid set" do

@@ -4,6 +4,8 @@ FactoryGirl.define do
   end
 
   factory :dailystat do
+    gid_num 1
+    gid_string 'ghost'
   end
 
   factory :day do

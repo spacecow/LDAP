@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Days", focus:true do
+describe "Days" do
   context "links to" do
     it "schedule" do
       visit day_path FactoryGirl.create(:day)
@@ -11,9 +11,9 @@ describe "Days", focus:true do
   context "sort for" do
     before(:each) do
       day = FactoryGirl.create(:day)
-      day.dailystats << create_stat("/home/testar",3)
-      day.dailystats << create_stat("/home/tester",43)
-      day.dailystats << create_stat("/home/test",123)
+      day.dailystats << create_stat("/home/testar",1003,'testar')
+      day.dailystats << create_stat("/home/tester",1004,'tester')
+      day.dailystats << create_stat("/home/test",1002,'test')
       Dailystat.last.account_size.should be(0)
       Dailystat.last.gid_num.should be(1002)
       Dailystat.last.gid_string.should eq 'test' 

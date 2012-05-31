@@ -66,8 +66,8 @@ describe Day do
       day = FactoryGirl.create(:day,date:'2011-11-25')
       test = FactoryGirl.create(:account, path:'/home/test')
       tester = FactoryGirl.create(:account, path:'/home/tester')
-      day.dailystats << Dailystat.create(path:'/home/test')
-      day.dailystats << Dailystat.create(path:'/home/tester')
+      day.dailystats << create_stat('/home/test')
+      day.dailystats << create_stat('/home/tester')
 
       report = FactoryGirl.create(:report, date:"2011-11-01")
 

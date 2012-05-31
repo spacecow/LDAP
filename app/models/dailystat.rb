@@ -5,27 +5,32 @@ class Dailystat < ActiveRecord::Base
 
   attr_accessor :path
   before_create :set_account
-  before_create :set_gid
+  #before_create :set_gid
+
+  validates_presence_of :gid_num
+  #some ppl refer to a gid_num that doesn't exist :gid_string
 
   def account_gid; account.gid end
   def account_path; account.path end
 
   def create_or_update_monthstats(report)
     if !self.account.monthstats.map(&:report).include?(report)
-      monthstat = Monthstat.create!(report_id:report.id, account_id:self.account.id, day_of_registration:self.account.days.order(:date).first.date)
+      monthstat = Monthstat.create!(report_id:report.id, account_id:self.account.id, day_of_registration:self.account.days.order(:date).first.date, gid_num:self.gid_num, gid_string:self.gid_string)
       monthstat.dailystats << self
     else
       self.account.monthstats.select{|e| e.report==report}.each do |monthstat|
         monthstat.increase_days
         #monthstat.set_status
         monthstat.save
-        self.update_attribute(:monthstat_id,monthstat.id) 
+        self.update_attribute(:monthstat_id,monthstat.id)
+        monthstat.update_attributes(gid_num:self.gid_num, gid_string:self.gid_string)
+        
       end
     end
   end
 
   def lame_copy(day_id)
-    Dailystat.create(day_id:day_id,path:account.path,account_size:self.account_size)
+    Dailystat.create(day_id:day_id, path:account.path, account_size:self.account_size, gid_num:self.gid_num, gid_string:self.gid_string)
   end
 
   class << self
@@ -51,12 +56,12 @@ class Dailystat < ActiveRecord::Base
       end 
     end
 
-    def set_gid
-      data = %x[id #{path.split('/').last}].match(/gid=(.+?)\((.+?)\)/)
-      self.gid_num = data[1] if data
-      self.gid_string = data[2] if data
-    #  #update_attribute(:gid,data[1]) if data
-    end
+    #def set_gid
+    #  data = %x[id #{path.split('/').last}].match(/gid=(.+?)\((.+?)\)/)
+    #  self.gid_num = data[1] if data
+    #  self.gid_string = data[2] if data
+    ##  #update_attribute(:gid,data[1]) if data
+    #end
 
 end
 

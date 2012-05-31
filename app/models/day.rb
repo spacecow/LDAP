@@ -19,30 +19,54 @@ class Day < ActiveRecord::Base
       path = "data/userlist_test.txt"
       if Rails.env.production?
         path = "data/userlist.txt"
-        %x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -x "(objectclass=*)" gecos homeDirectory > data/userlist.txt]
+        %x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -x "(objectclass=*)" > data/userlist.txt]
         #%x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -h 172.16.100.79 "(objectclass=*)" gecos homeDirectory > data/userlist.txt]
         #%x[ldapsearch -b "ou=Riec,o=TohokuUNV,c=JP" -h altair "(objectclass=*)" gecos homeDirectory > data/userlist.txt]
       end
+      people, gid = false, ""
+      report_date = s.strftime("%Y-%m-01")
+      hash = Ldapsearch.group_hash
       File.open(path).each do |line|
-        if data = line.match(/homeDirectory: (.*)/)
-          report_date = s.strftime("%Y-%m-01")
-          if %w(development test).include?(Rails.env)
-            #day.accounts << Account.find_or_create_by_path(data[1])
-            stat = Dailystat.create(:path => data[1].chop)
+        people = true if Ldapsearch.people_match(line) 
+        people = false if line == "\n"
+        if people
+          if data = line.match(/gidNumber: (\d+)/)
+            gid = "#{hash[data[1]]}|#{data[1]}"
+          end
+          if data = line.match(/homeDirectory: (.*)/)
+            if %w(development test).include?(Rails.env)
+              stat = Dailystat.create(path:data[1].chop,gid_string:gid.split('|')[0],gid_num:gid.split('|')[1])
+            elsif Rails.env.production?
+              stat = Dailystat.create(path:data[1],gid_string:gid.split('|')[0],gid_num:gid.split('|')[1])
+            end
             day.dailystats << stat
             report = Report.find_or_create_by_date(report_date)
             stat.create_or_update_monthstats(report)
-            #day.delay.delay_add_user(User.create(:path => data[1].chop))
-          elsif Rails.env.production?
-            #day.accounts << Account.find_or_create_by_path(data[1])
-            stat = Dailystat.create(:path => data[1])
-            day.dailystats << stat
-            report = Report.find_or_create_by_date(report_date)
-            stat.create_or_update_monthstats(report)
-            #day.delay.delay_add_user(User.create(:path => data[1]))
           end
         end
       end
+
+      #File.open(path).each do |line|
+      #  if data = line.match(/homeDirectory: (.*)/)
+      #    report_date = s.strftime("%Y-%m-01")
+      #    if %w(development test).include?(Rails.env)
+      #      #day.accounts << Account.find_or_create_by_path(data[1])
+      #      stat = Dailystat.create(:path => data[1].chop)
+      #      day.dailystats << stat
+      #      report = Report.find_or_create_by_date(report_date)
+      #      stat.create_or_update_monthstats(report)
+      #      #day.delay.delay_add_user(User.create(:path => data[1].chop))
+      #    elsif Rails.env.production?
+      #      #day.accounts << Account.find_or_create_by_path(data[1])
+      #      stat = Dailystat.create(:path => data[1])
+      #      day.dailystats << stat
+      #      report = Report.find_or_create_by_date(report_date)
+      #      stat.create_or_update_monthstats(report)
+      #      #day.delay.delay_add_user(User.create(:path => data[1]))
+      #    end
+      #  end
+      #end
+
       day
     end
 
