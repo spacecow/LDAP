@@ -99,7 +99,6 @@ describe "report" do
       Monthstat.last.userid.should eq 'tester'
     end
     it "the monthstat has its gid set" do
-      p Monthstat.last
       Monthstat.last.gid_num.should eq 1004
     end
     it "the monthstat has its gid set" do

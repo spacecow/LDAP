@@ -47,7 +47,7 @@ describe "report" do
 
     it "has rows in the table" do
       visit report_path(@report2)
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","2011-11-25"]] 
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","","","2011-11-25"]] 
     end
   end #show: layout, with monthstats
 
@@ -68,7 +68,7 @@ describe "report" do
     end
 
     it "has rows in the table" do
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","2011-11-25"]] 
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","","","2011-11-25"]] 
     end
   end #show: layout, with monthstats
 
@@ -86,7 +86,8 @@ describe "report" do
     end
 
     it "has rows in the table" do
-      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","2011-11-25"],["tester","1004","tester","/home/tester","1","2011-11-26"]] 
+      save_and_open_page
+      tablemap('monthstats').should eq [["test","1002","test","/home/test","1","","","2011-11-25"],["tester","1004","tester","/home/tester","1","","","2011-11-26"]] 
     end
 
     it "Userid ascending (default)" do
@@ -173,14 +174,14 @@ describe "report" do
 
     it "Day of Registration ascending" do
       table('monthstats').click_link "Day of Registration"
-      tablecell(0,5).should have_content("2011-11-25")
-      tablecell(1,5).should have_content("2011-11-26")
+      tablecell(0,7).should have_content("2011-11-25")
+      tablecell(1,7).should have_content("2011-11-26")
     end
     it "Day of Registration descending" do
       table('monthstats').click_link "Day of Registration"
       table('monthstats').click_link "Day of Registration"
-      tablecell(0,5).should have_content("2011-11-26")
-      tablecell(1,5).should have_content("2011-11-25")
+      tablecell(0,7).should have_content("2011-11-26")
+      tablecell(1,7).should have_content("2011-11-25")
     end
   end
 end

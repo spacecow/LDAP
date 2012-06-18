@@ -25,7 +25,7 @@ class Day < ActiveRecord::Base
       end
       people, gid = false, ""
       report_date = s.strftime("%Y-%m-01")
-      hash = Ldapsearch.group_hash
+      hash = Ldapsearch.group_hash('userlist.txt')
       File.open(path).each do |line|
         people = true if Ldapsearch.people_match(line) 
         people = false if line == "\n"
