@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Account do
+  describe "#check_gids" do
+    it "" do
+      FactoryGirl.create(:account,gid:'1(ghost)')
+      Account.check_gids
+    end
+  end
+
   context "copy gid to dailystat" do
     it "with dailystats" do
       account = FactoryGirl.create(:account,path:"/home/test")

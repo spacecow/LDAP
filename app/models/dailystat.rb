@@ -13,6 +13,8 @@ class Dailystat < ActiveRecord::Base
   def account_gid; account.gid end
   def account_path; account.path end
 
+  def check_account; !account.nil? end
+
   def create_or_update_monthstats(report)
     if !self.account.monthstats.map(&:report).include?(report)
       monthstat = Monthstat.create!(report_id:report.id, account_id:self.account.id, day_of_registration:self.account.days.order(:date).first.date, gid_num:self.gid_num, gid_string:self.gid_string)
@@ -38,6 +40,8 @@ class Dailystat < ActiveRecord::Base
     def all_in_month(date)
       where("days.date >= :start_date and days.date <= :end_date", {start_date:date.beginning_of_month, end_date:date.end_of_month}).includes(:day) 
     end
+
+    def check_accounts; all.map(&:check_account) end
 
   end
 

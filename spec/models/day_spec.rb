@@ -19,7 +19,7 @@ describe Day do
     it "user count is copied" do
       Day.last.users_count.should eq 1
     end
-    it "user count is copied" do
+    it "user account_size is copied" do
       Day.last.users_account_size_sum.should eq 4
     end
   end

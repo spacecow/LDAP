@@ -6,6 +6,10 @@ class Account < ActiveRecord::Base
 
   validates_uniqueness_of :path
 
+  def check_gid
+    gid.match(/(\d+)\((.+)\)/)
+  end
+
   def copy_gid_to_dailystats
     dailystats.each do |stat|
       data = gid.match(/(\d+)\((.+)\)/) if gid
@@ -20,6 +24,8 @@ class Account < ActiveRecord::Base
   end
 
   class << self
+    def check_gids; all.map(&:check_gid) end
+
     def update_gids
       Account.all.map(&:update_gid)
     end

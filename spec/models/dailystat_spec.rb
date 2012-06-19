@@ -1,6 +1,27 @@
 require 'spec_helper'
 
 describe Dailystat do
+  describe "#check_accounts" do
+    it "must have an account" do
+      stat = FactoryGirl.create(:dailystat)
+      Dailystat.check_accounts.should eq [true]
+    end
+
+    it "cannot be without an account" do
+      stat = FactoryGirl.create(:dailystat)
+      stat.update_attribute(:account_id, nil)
+      Dailystat.check_accounts.should eq [false]
+    end
+  end
+
+  describe "#update_gid" do
+    it "" do
+      stat = FactoryGirl.create(:dailystat)
+      stat.update_attribute(:gid_num,nil) 
+      stat.account.update_attribute(:gid,"2(yeah)")
+    end
+  end
+
   describe "#lame_copy" do
     before(:each) do
       date = "2012-04-12"
