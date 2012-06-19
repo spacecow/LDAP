@@ -31,6 +31,11 @@ class Dailystat < ActiveRecord::Base
     end
   end
 
+  def migrate_gid
+    update_attribute(:gid_num, account.gid_num)
+    update_attribute(:gid_string, account.gid_string)
+  end
+
   def lame_copy(day_id)
     Dailystat.create(day_id:day_id, path:account.path, account_size:self.account_size, gid_num:self.gid_num, gid_string:self.gid_string)
   end

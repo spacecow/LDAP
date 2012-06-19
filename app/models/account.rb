@@ -18,6 +18,9 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def gid_num; gid.match(/(\d+)\((.+)\)/)[1] end
+  def gid_string; gid.match(/(\d+)\((.+)\)/)[2] end
+
   def update_gid
     data = %x[id #{path.split('/').last}].match(/gid=(.+?)\s/)
     update_attribute(:gid,data[1]) if data

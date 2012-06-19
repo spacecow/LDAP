@@ -86,7 +86,6 @@ describe "report" do
     end
 
     it "has rows in the table" do
-      save_and_open_page
       tablemap('monthstats').should eq [["test","1002","test","/home/test","1","","","2011-11-25"],["tester","1004","tester","/home/tester","1","","","2011-11-26"]] 
     end
 
