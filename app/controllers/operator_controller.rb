@@ -2,12 +2,10 @@ class OperatorController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def schema
-    redirect_to login_path and return unless current_user
     @days = Day.order(sort_column+" "+sort_direction)
   end
 
   def report
-    redirect_to login_path and return unless current_user
     @date = Date.parse("#{params[:date]}-01") 
     @days = Day.where("date >= :start_date and date <= :end_date", {:start_date => @date.beginning_of_month, :end_date => @date.end_of_month}) 
 #    @accounts = {}
@@ -32,7 +30,6 @@ class OperatorController < ApplicationController
   end
 
   def reports
-    redirect_to login_path and return unless current_user
     @months = Day.scoped.group_by{|e| e.date.strftime("%Y-%m")}
   end
 

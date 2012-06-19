@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 describe "Layout" do
-  before(:each){ login }
-
   context "site nav" do
+    before(:each) do
+      visit root_path
+    end
+
     it "has a site nav div" do
       page.should have_div('site_nav')
     end

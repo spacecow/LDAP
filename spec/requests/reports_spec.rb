@@ -3,7 +3,6 @@ require 'spec_helper'
 describe "reports" do
   context "layout, without reports" do
     before(:each) do
-      login
       visit reports_path
     end
 
@@ -19,7 +18,6 @@ describe "reports" do
   context "layout, with reports" do
     before(:each) do
       Day.create(:date => "2011-11-25")
-      login
       visit reports_path
     end
 

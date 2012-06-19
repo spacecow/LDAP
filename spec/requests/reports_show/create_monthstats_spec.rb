@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe "report" do
   before(:each) do
-    login 
     @report = FactoryGirl.create(:report,date:Date.parse('2011-11-01'))
   end
 

@@ -2,7 +2,6 @@ class ReportsController < ApplicationController
   helper_method :sort_column, :sort_direction, :account_exists?, :path_exists?
 
   def show
-    redirect_to login_path and return unless current_user
     @report = Report.find(params[:id])
     stats = Dailystat.all_in_month(@report.date).where("monthstat_id is NULL")
 
@@ -36,7 +35,6 @@ class ReportsController < ApplicationController
   end
 
   def index
-    redirect_to login_path and return unless current_user
     months = Day.scoped.group_by{|e| e.date.strftime("%Y-%m-01")}.keys
     @reports = months.map do |month|
       Report.find_or_create_by_date(month)

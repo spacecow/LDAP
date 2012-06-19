@@ -1,8 +1,8 @@
 LDAP::Application.routes.draw do
   get "operator/schema"
 
-  get 'logout' => 'sessions#destroy'
-  get 'login' => 'sessions#new'
+#  get 'logout' => 'sessions#destroy'
+#  get 'login' => 'sessions#new'
   resources :sessions, :only => [:new,:create,:destroy]
 
   get 'schema' => 'operator#schema'
