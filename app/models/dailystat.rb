@@ -32,8 +32,13 @@ class Dailystat < ActiveRecord::Base
   end
 
   def migrate_gid
-    update_attribute(:gid_num, account.gid_num)
-    update_attribute(:gid_string, account.gid_string)
+    if account.check_advance_gid
+      update_attribute(:gid_num, account.gid_num)
+      update_attribute(:gid_string, account.gid_string)
+    else
+      update_attribute(:gid_num, account.gid)
+      update_attribute(:gid_string, nil)
+    end 
   end
 
   def lame_copy(day_id)

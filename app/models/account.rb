@@ -6,7 +6,7 @@ class Account < ActiveRecord::Base
 
   validates_uniqueness_of :path
 
-  def check_gid
+  def check_advance_gid
     gid.match(/(\d+)\((.+)\)/)
   end
 
@@ -27,7 +27,7 @@ class Account < ActiveRecord::Base
   end
 
   class << self
-    def check_gids; all.map(&:check_gid) end
+    def check_advance_gids; all.map(&:check_advance_gid) end
 
     def update_gids
       Account.all.map(&:update_gid)

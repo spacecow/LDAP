@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Account do
-  describe "#check_gids" do
+  describe "#check_advance_gids" do
     it "" do
       FactoryGirl.create(:account,gid:'1(ghost)')
-      Account.check_gids
+      Account.check_advance_gids
     end
   end
 

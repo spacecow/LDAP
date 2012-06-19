@@ -2,12 +2,22 @@ require 'spec_helper'
 
 describe Dailystat do
   describe "#migrate_gid" do
-    it "" do
-      stat = FactoryGirl.create(:dailystat)
-      stat.account.update_attribute(:gid,'2(McGyver)')
-      stat.migrate_gid
-      stat.gid_num.should be(2)
-      stat.gid_string.should eq('McGyver') 
+    before(:each) do
+      @stat = FactoryGirl.create(:dailystat)
+    end
+
+    it "d(sss)" do
+      @stat.account.update_attribute(:gid,'2(McGyver)')
+      @stat.migrate_gid
+      @stat.gid_num.should be(2)
+      @stat.gid_string.should eq('McGyver') 
+    end
+
+    it "d" do
+      @stat.account.update_attribute(:gid,'2')
+      @stat.migrate_gid
+      @stat.gid_num.should be(2)
+      @stat.gid_string.should be_nil 
     end
   end
 
