@@ -11,7 +11,7 @@ describe "report" do
     end
 
     it "has a title" do
-      page.should have_title('2011-11')
+      page.should have_title('Reports')
     end
 
     it "has no monthstats table" do
@@ -35,7 +35,7 @@ describe "report" do
 
     it "has a title" do
       visit report_path(@report2)
-      page.should have_title('2011-12')
+      page.should have_title('Report: 2011-12')
     end
 
     it "an account has a monthstat in each month" do

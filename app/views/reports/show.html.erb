@@ -1,4 +1,4 @@
-<%= title @report.date.strftime("%Y-%m") %>
+<%= title @report.month %>
 
 <%= link_to 'Output to XLS', report_path(sort:params[:sort], direction:params[:direction], :format => :xls) %>
 

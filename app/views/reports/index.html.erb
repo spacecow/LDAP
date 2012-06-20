@@ -1,3 +1,21 @@
-<%= title pl(:report) %>
+<% if @monthstats.empty? %>
+  <%= title pl(:report) %>
+<% elsif @start_report == @end_report %>
+  <%= title "#{pl(:report,1)}: #{@start_report.month}" %>
+<% else %>
+  <%= title "#{pl(:report)}: #{@start_report.month} - #{@end_report.month}" %>
+<% end %>
+
+<%= form_tag reports_path, :method => :get do %>
+  <%= label_tag :start_month %>
+  <%= select_tag :start_month, options_from_collection_for_select(@reports, "id", "date", @start_report && @start_report.id), :include_blank => true %>
+  <%= label_tag :end_month %>
+  <%= select_tag :end_month, options_from_collection_for_select(@reports, "id", "date", @end_report && @end_report.id), :include_blank => true %>
+  <%= submit_tag t(:go) %>
+<% end %>
 
 <%= render partial:'reports', :locals =>{ reports:@reports } unless @reports.empty? %>
+
+<%= link_to 'Output to XLS', reports_path(sort:params[:sort], direction:params[:direction], :format => :xls, start_month:@start_report.id, end_month:@end_report.id) %>
+
+<%= render 'monthstats', monthstats:@monthstats if @monthstats.present? %>

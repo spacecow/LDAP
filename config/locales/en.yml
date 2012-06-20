@@ -4,10 +4,12 @@ en:
   days: "Days"
   del: "Del"
   gid: "GID"
+  go: "Go"
   login: "Login"
   logout: "Logout"
   path: "Path"
   report:
+    one: 'Report'
     other: 'Reports'
   schema: "Schema"
   tot_account_size: "Tot. Account Size"

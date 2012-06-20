@@ -4,6 +4,7 @@ FactoryGirl.define do
   end
 
   factory :dailystat do
+    path "/home/factory"
     gid_num 1
     gid_string 'ghost'
   end
